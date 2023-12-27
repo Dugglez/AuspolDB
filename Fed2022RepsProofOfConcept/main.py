@@ -4,13 +4,35 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import pandas as pd
 
+val, election, election_id = 12246, 'Fed2004', 6
+
+tcpbycandidate = f'HouseTcpByCandidateByVoteTypeDownload-{val}.csv'
+tcpflow = f'HouseTcpFlowByDivisionDownload-{val}.csv'
+firstprefs = f'HouseFirstPrefsByCandidateByVoteTypeDownload-{val}.csv'
+
+
+
+
 
 def candidate_names():
     # Read CSV file into a DataFrame
-    df = pd.read_csv('HouseFirstPrefsByCandidateByVoteTypeDownload-27966.csv')
+    df = pd.read_csv(firstprefs)
 
     # Extract full name and create SQL insert statements
     sql_statements = []
+    existing_candidates = set()
+
+    # Check if 'allcandidates.txt' exists and load existing candidate names
+    try:
+        with open('allcandidates.txt', 'r') as existing_file:
+            existing_candidates = set(existing_file.read().splitlines())
+    except FileNotFoundError:
+        pass  # File doesn't exist, proceed with an empty set
+
+    # Create a list to store newly encountered candidates
+    new_candidates = []
+
+    # Iterate through the DataFrame
     for index, row in df.iterrows():
         if pd.notna(row['Surname']) and pd.notna(row['GivenNm']):
             if 'Informal' in row['Surname'] or 'Informal' in row['GivenNm']:
@@ -22,21 +44,43 @@ def candidate_names():
             full_name = full_name.replace("'", "`")
 
             capitalized_name = full_name.title()  # Capitalize the first letter of each word
-            sql_statement = f"INSERT INTO `candidates`(`name`, `description`) VALUES ('{capitalized_name}', '')"
-            sql_statements.append(sql_statement)
 
+            # Check if the candidate is already present in the existing candidates set
+            if capitalized_name not in existing_candidates and capitalized_name not in new_candidates:
+                # If not, add the candidate to the list and generate SQL statement
+                new_candidates.append(capitalized_name)
+                sql_statement = f"INSERT INTO `candidates`(`name`, `description`) VALUES ('{capitalized_name}', '')"
+                sql_statements.append(sql_statement)
+
+    # Sort new candidate names before writing to 'allcandidates.txt'
+    new_candidates.sort()
+    with open('allcandidates.txt', 'a') as existing_file:
+        for candidate in new_candidates:
+            existing_file.write(candidate + '\n')
+    sql_statements.sort()
     # Write SQL statements to a file
     with open('insert_candidates.sql', 'w') as f:
         for statement in sql_statements:
             f.write(statement + ';\n')
+    print(f"Number of new candidates added: {len(new_candidates)}")
 
 
 def electorates():
     # Read CSV file into a DataFrame
-    df = pd.read_csv('HouseFirstPrefsByCandidateByVoteTypeDownload-27966.csv')
+    df = pd.read_csv(firstprefs)
 
     # Create a set to store unique electorates
     unique_electorates = set()
+
+    # Check if 'allelectorates.txt' exists and load existing electorates
+    try:
+        with open('allelectorates.txt', 'r') as existing_file:
+            existing_electorates = set(existing_file.read().splitlines())
+    except FileNotFoundError:
+        existing_electorates = set()  # File doesn't exist, proceed with an empty set
+
+    # Create a list to store newly encountered electorates
+    new_electorates = []
 
     # Extract electorate information and create SQL insert statements
     sql_statements = []
@@ -49,27 +93,46 @@ def electorates():
             # Escape apostrophes in the electorate name using backticks
             electorate_name = row['DivisionNm'].replace("'", "`")
 
-            sql_statement = (
-                f"INSERT INTO `electorates`(`name`, `jurisdiction`, `type`, `namesake`, `abolished`, `population`) "
-                f"VALUES ('{electorate_name}', '{row['StateAb']}', 'Division', null, null, null)"
-            )
-            sql_statements.append(sql_statement)
+            # Check if the electorate is already present in the existing electorates set
+            if electorate_name not in existing_electorates and electorate_name not in new_electorates:
+                # If not, add the electorate to the list and generate SQL statement
+                new_electorates.append(electorate_name)
+                sql_statement = (
+                    f"INSERT INTO `electorates`(`name`, `jurisdiction`, `type`, `namesake`, `abolished`, `population`) "
+                    f"VALUES ('{electorate_name}', '{row['StateAb']}', 'Division', null, null, null)"
+                )
+                sql_statements.append(sql_statement)
 
+    # Sort new electorates before writing to 'allelectorates.txt'
+    new_electorates.sort()
+    with open('allelectorates.txt', 'a') as existing_file:
+        for electorate in new_electorates:
+            existing_file.write(electorate + '\n')
+    sql_statements.sort()
     # Write SQL statements to a file
     with open('insert_electorates.sql', 'w') as f:
         for statement in sql_statements:
             f.write(statement + ';\n')
 
+    print(f"Number of new electorates added: {len(new_electorates)}")
+
 
 def parties():
     # Read CSV file into a DataFrame
-    df = pd.read_csv('HouseFirstPrefsByCandidateByVoteTypeDownload-27966.csv')
+    df = pd.read_csv(firstprefs)
 
     # Create a set to store unique party names
     unique_parties = set()
 
     # Parties to ignore
-    ignored_parties = {'A.L.P.', 'Labor', 'Informal'}
+    ignored_parties = {'Informal'}
+
+    # Read existing parties from allparties.txt
+    try:
+        with open('allparties.txt', 'r') as f:
+            existing_parties = set(f.read().splitlines())
+    except FileNotFoundError:
+        existing_parties = set()
 
     # Extract party information and create SQL insert statements
     sql_statements = []
@@ -80,17 +143,18 @@ def parties():
         if party_name in ignored_parties:
             continue
 
-        # Skip 'Australian Labor Party' and 'Liberal'
-        if party_name == 'Australian Labor Party' or party_name == 'Liberal':
-            continue
-
         # Check if party_name is not NaN before replacing apostrophes
         if pd.notna(party_name):
             # Escape apostrophes in the party name using backticks
             party_name = party_name.replace("'", "`")
 
-            if party_name not in unique_parties:
+            if party_name not in unique_parties and party_name not in existing_parties:
                 unique_parties.add(party_name)
+                existing_parties.add(party_name)
+
+                # Write the party name to allparties.txt
+                with open('allparties.txt', 'a') as all_parties_file:
+                    all_parties_file.write(f"{party_name}\n")
 
                 sql_statement = (
                     f"INSERT INTO `parties`(`name`, `founded`) "
@@ -102,87 +166,49 @@ def parties():
     with open('insert_parties.sql', 'w') as f:
         for statement in sql_statements:
             f.write(statement + ';\n')
+    print(f"Number of new parties added: {len(unique_parties)}")
 
 
 def calculate_electorate_mapping():
-    # Read electorates_insert.sql file and find the electorates' names
-    with open('insert_electorates.sql', 'r') as f:
-        lines = f.readlines()
+    # Read allelectorates.txt file and find the electorates' names
+    try:
+        with open('allelectorates.txt', 'r') as f:
+            electorates = f.read().splitlines()
+    except FileNotFoundError:
+        electorates = []
 
     electorate_mapping = {}
-    for idx, line in enumerate(lines):
-        if 'INSERT INTO `electorates`' in line:
-            # Extract electorate name from the line
-            electorate_name = line.split("VALUES ('")[1].split("',")[0]
-            # Calculate electorate ID based on the index in the file
-            electorate_id = 152 + idx
-            electorate_mapping[electorate_name] = electorate_id
+    for idx, electorate_name in enumerate(electorates, start=1):
+        electorate_mapping[electorate_name] = idx
 
     return electorate_mapping
 
 
 def calculate_candidate_mapping():
-    # Read candidates_insert.sql file and find the candidates' names
-    with open('insert_candidates.sql', 'r') as f:
-        lines = f.readlines()
+    # Read allcandidates.txt file and find the candidates' names
+    try:
+        with open('allcandidates.txt', 'r') as f:
+            candidates = f.read().splitlines()
+    except FileNotFoundError:
+        candidates = []
 
     candidate_mapping = {}
-    for idx, line in enumerate(lines):
-        if 'INSERT INTO `candidates`' in line:
-            # Extract candidate name from the line
-            candidate_name = line.split("VALUES ('")[1].split("',")[0]
-            # Calculate candidate ID based on the index in the file
-            candidate_id = 183 + idx
-            candidate_mapping[candidate_name] = candidate_id
+    for idx, candidate_name in enumerate(candidates, start=1):
+        candidate_mapping[candidate_name] = idx
 
     return candidate_mapping
 
 
 def calculate_party_mapping():
-    # Create a mapping of party names to party IDs
-    party_mapping = {
-        'Australian Labor Party': 1,
-        'Liberal': 2,
-        'United Australia Party': 3,
-        'Pauline Hanson`s One Nation': 4,
-        'Independent': 5,
-        'The Greens': 6,
-        'Liberal Democrats': 7,
-        'FUSION: Science, Pirate, Secular, Climate Emergency': 8,
-        'Democratic Alliance': 9,
-        'Australian Federation Party': 10,
-        'The Nationals': 11,
-        'Citizens Party': 12,
-        'Sustainable Australia Party - Stop Overdevelopment / Corruption': 13,
-        'Australian Democrats': 14,
-        'Informed Medical Options Party': 15,
-        'Shooters, Fishers and Farmers Party': 16,
-        'Animal Justice Party': 17,
-        'TNL': 18,
-        'Indigenous - Aboriginal Party of Australia': 19,
-        'Socialist Alliance': 20,
-        'NT CLP': 21,
-        'Queensland Greens': 22,
-        'Australian Values Party': 23,
-        'Liberal National Party of Queensland': 24,
-        'The Great Australian Party': 25,
-        'Katter`s Australian Party (KAP)': 26,
-        'Legalise Cannabis Australia': 27,
-        'Australian Progressives': 28,
-        'National Party': 29,
-        'Centre Alliance': 30,
-        'Drew Pavlou Democratic Alliance': 31,
-        'Jacqui Lambie Network': 32,
-        'The Local Party': 33,
-        'Victorian Socialists': 34,
-        'Derryn Hinch`s Justice Party': 35,
-        'Reason Australia': 36,
-        'The Greens (WA)': 37,
-        'Australian Christians': 38,
-        'WESTERN AUSTRALIA PARTY': 39,
-        'A.L.P.': 1,  # Mapping A.L.P. to Australian Labor Party
-        'Labor': 1  # Mapping Labor to Australian Labor Party
-    }
+    # Read allparties.txt file and find the parties' names
+    try:
+        with open('allparties.txt', 'r') as f:
+            parties = f.read().splitlines()
+    except FileNotFoundError:
+        parties = []
+
+    party_mapping = {party: idx + 1 for idx, party in enumerate(parties)}
+
     return party_mapping
 
 
@@ -201,12 +227,15 @@ def get_informal_votes(csv_file, division_name):
 
 def elections_electorates():
     # Read CSV file into a DataFrame
-    df = pd.read_csv('HouseTcpByCandidateByVoteTypeDownload-27966.csv')
+    df = pd.read_csv(tcpbycandidate)
 
     # Calculate mappings dynamically
     electorate_mapping = calculate_electorate_mapping()
     candidate_mapping = calculate_candidate_mapping()
     party_mapping = calculate_party_mapping()
+
+    # Load the CSV file
+    transfer_df = pd.read_csv(tcpbycandidate)
 
     # Iterate through the DataFrame to generate SQL statements
     sql_statements = []
@@ -221,9 +250,6 @@ def elections_electorates():
         else:
             winning_row = row2
             losing_row = row1
-
-        # Extract relevant information
-        election_id = 0  # Assuming election_id is the same for all rows
 
         winning_candidate_name = (winning_row['GivenNm'] + ' ' + winning_row['Surname'].title()).replace("'", "`")
         losing_candidate_name = (losing_row['GivenNm'] + ' ' + losing_row['Surname'].title()).replace("'", "`")
@@ -240,9 +266,16 @@ def elections_electorates():
 
         # Calculate formal votes, informal votes, and turnout
         formal_votes = total_votes_winner + total_votes_loser
-        informal_votes = get_informal_votes('HouseFirstPrefsByCandidateByVoteTypeDownload-27966.csv',
+        informal_votes = get_informal_votes(firstprefs,
                                             winning_row['DivisionNm'])
         turnout = formal_votes + informal_votes
+
+        # Get the transfer data for the current electorate from transfer_df
+        electorate_transfers = transfer_df[transfer_df['DivisionNm'] == winning_row['DivisionNm']]
+
+        # Calculate winning_votes and second_votes, realised after I already had these a few lines back...
+        winning_votes = electorate_transfers['TotalVotes'].max()
+        second_votes = electorate_transfers['TotalVotes'].min()
 
         # Check division name for apostrophes
         division_name = winning_row['DivisionNm'].replace("'", "`")
@@ -253,13 +286,13 @@ def elections_electorates():
         # Generate SQL statement
         sql_statement = (
             f"INSERT INTO `elections_electorates` "
-            f"(`election_id`, `electorate_id`, `2cp_or_majority`, "
-            f"`winning_candidate`, `winning_party`, `second_candidate`, "
-            f"`second_party`, `formal_votes`, `informal_votes`, `turnout`) "
+            f"(`election_id`, `electorate_id`, `twocp_or_majority`, "
+            f"`winning_candidate`, `winning_party`, `winning_votes`, `second_candidate`, "
+            f"`second_party`, `second_votes`, `formal_votes`, `informal_votes`, `turnout`) "
             f"VALUES ('{election_id}', '{electorate_mapping[division_name]}', "
             f"'{twocp_or_majority:.2f}', '{winning_candidate_id}', "
-            f"'{winning_party_id}', '{losing_candidate_id}', "
-            f"'{losing_party_id}', '{formal_votes}', "
+            f"'{winning_party_id}', '{winning_votes}', '{losing_candidate_id}', "
+            f"'{losing_party_id}', '{second_votes}', '{formal_votes}', "
             f"'{informal_votes}', '{turnout}')"
         )
 
@@ -273,7 +306,7 @@ def elections_electorates():
 
 def candidates_elections_electorates():
     # Read CSV file into a DataFrame
-    df = pd.read_csv('HouseFirstPrefsByCandidateByVoteTypeDownload-27966.csv')
+    df = pd.read_csv(firstprefs)
 
     # Calculate mappings
     candidate_mapping = calculate_candidate_mapping()
@@ -298,15 +331,16 @@ def candidates_elections_electorates():
         party_id = party_mapping.get(str(row['PartyNm']).replace("'", "`"))
 
         # Calculate winner
-        winner = 1 if row['Elected'] == 'Y' else 0
+        winner = 1 if row['Elected'] in ('Y', '#') else 0
+        prev_winner = 1 if row['HistoricElected'] == 'Y' else 0
 
         # Generate SQL statement
         sql_statement = (
             f"INSERT INTO `candidates_elections_electorates` "
             f"(`candidate_id`, `election_id`, `electorate_id`, `party_id`, "
-            f"`votes`, `swing`, `winner`) VALUES "
-            f"('{candidate_id}', '0', '{electorate_id}', '{party_id}', "
-            f"'{row['TotalVotes']}', '{row['Swing']}', '{winner}')"
+            f"`votes`, `swing`, `winner`, `prev_winner`) VALUES "
+            f"('{candidate_id}', '{election_id}', '{electorate_id}', '{party_id}', "
+            f"'{row['TotalVotes']}', '{row['Swing']}', '{winner}', '{prev_winner}')"
         )
         sql_statements.append(sql_statement)
 
@@ -315,9 +349,34 @@ def candidates_elections_electorates():
         for statement in sql_statements:
             f.write(statement + ';\n')
 
+def combine_sql_files(output_filename, *input_filenames):
+    try:
+        # Open the output file in write mode
+        with open(output_filename, 'w') as output_file:
+            # Iterate over each input filename
+            for input_filename in input_filenames:
+                try:
+                    # Open each input file in read mode
+                    with open(input_filename, 'r') as input_file:
+                        # Read the content of the input file
+                        file_content = input_file.read()
+                        # Write the content to the output file
+                        output_file.write(file_content)
+                except FileNotFoundError:
+                    print(f"File not found: {input_filename}")
+    except Exception as e:
+        print(f"Error combining files: {e}")
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    candidate_names()
+    electorates()
+    parties()
+    elections_electorates()
     candidates_elections_electorates()
+    combine_sql_files(f'combined_{election}.sql', 'insert_candidates.sql',
+                      'insert_electorates.sql', 'insert_parties.sql','insert_elections_electorates.sql',
+                      'insert_candidates_elections_electorates.sql')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

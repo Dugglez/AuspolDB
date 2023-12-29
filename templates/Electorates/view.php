@@ -225,7 +225,7 @@
                     <script>
                         document.getElementById('electionDropdown').addEventListener('change', function () {
                             var selectedLabel = this.options[this.selectedIndex].text;
-                            alert('Selected Election Label: ' + selectedLabel);
+
 
                             // Select elements with specific classes and IDs
                             var questionMarks = document.querySelectorAll('.question-mark');
@@ -300,10 +300,12 @@
 
 
 
-                    <div id="content" class="tooltip" style="display: none">2CP (Two-candidate preferred) represents the percentage of votes
-                    a candidate received after the distribution of preferences. Prior to the 1919 election, Australian Federal elections used
-                    First Past the Post, where voters could not allocate their preferences. As such, in elections before 1919, there is no 2CP.
-                    Instead, the majority is recorded, which is the difference in votes between the winning candidate and the second candidate.</div>
+                    <div id="content" class="tooltip" style="display: none; background-color: #333; color: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); font-size: 14px; ">
+                        2CP (Two-candidate preferred) represents the percentage of votes
+                        a candidate received after the distribution of preferences. Prior to the 1919 election, Australian Federal elections used
+                        First Past the Post, where voters could not allocate their preferences. As such, in elections before 1919, there is no 2CP.
+                        Instead, the majority is recorded, which is the difference in votes between the winning candidate and the second candidate.
+                    </div>
                     <div class="table-responsive" id="electionInfoTableContainer" style="margin-top: 20px; display: none;">
                         <table id="electionInfoTable">
                             <tr>

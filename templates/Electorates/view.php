@@ -167,8 +167,9 @@
                         $election = $electionslist->get($uniqueElectionId);
 
                         // Concatenate jurisdiction with date (formatted as year)
-                        $electionLabel =  date('Y', strtotime($election->date)) . ' ' . $stateMappings[$election->jurisdiction];
-
+                        $electionDate = $election->date;
+                        $electionYear = $electionDate->format('Y');
+                        $electionLabel = $electionYear . ' ' . $stateMappings[$election->jurisdiction];
                         // Store in associative array
                         $uniqueElections[$uniqueElectionId] = $electionLabel;
                     }

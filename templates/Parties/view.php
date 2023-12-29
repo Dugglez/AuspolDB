@@ -115,9 +115,13 @@
                                 <td>
                                     <?php
                                     $election = $elections->get($candidatesElectionsElectorates->election_id);
-                                    $electionLabel = date('Y', strtotime($election->date)) . ' ' . $election->jurisdiction;
+                                    $electionDate = $election->date;
+                                    $electionYear = $electionDate->format('Y');
+                                    $electionLabel = $electionYear . ' ' . $election->jurisdiction;
+
                                     echo $this->Html->link(h($electionLabel), ['controller' => 'Elections', 'action' => 'view', $election->id]);
                                     ?>
+
                                 </td>
                                 <td>
                                     <?php

@@ -4,29 +4,23 @@
  * @var \App\Model\Entity\Electorate $electorate
  */
 
-?><style>
-    .tooltip {
+?> <style>
+    .tooltip-container {
         position: relative;
         display: inline-block;
     }
 
-    .tooltip:hover::after {
-        content: attr(data-tooltip);
+    .tooltip-content {
+        display: none;
         position: absolute;
-        bottom: 125%;
-        left: 50%;
-        transform: translateX(-50%);
+        top: -75px; /* Adjust the distance from the question mark */
+        transform: translateX(-20%);
         background-color: #333;
         color: #fff;
-        padding: 8px;
-        border-radius: 4px;
+        padding: 16px;
+        border-radius: 8px;
         white-space: nowrap;
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
-    }
-
-    .tooltip:hover::after {
-        opacity: 1;
+        z-index: 1000;
     }
 
     .question-mark {
@@ -42,6 +36,12 @@
         font-size: 12px;
     }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<div class="overlay">
+    <div class="tooltip-content">
+        2CP (Two-candidate preferred) indicates the percentage of votes that the winning candidate received after preference distribution.
+    </div>
+</div>
 <div class="row">
 
     <div class="column-responsive column-80">
@@ -222,20 +222,96 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
+                    <script>
+                        document.getElementById('electionDropdown').addEventListener('change', function () {
+                            var selectedLabel = this.options[this.selectedIndex].text;
+                            alert('Selected Election Label: ' + selectedLabel);
 
-                    <h5 style="display: inline-block; margin-right: 5px;">Please note: 2CP Vote counts from 1983 and earlier may be inaccurate.</h5>
-                    <div class="tooltip" data-tooltip="2CP vote counts prior to 1984 were not recorded in electorates where a majority of votes was achieved by one candidate.
-                    The vote counts provided are based on the 2CP percentage, meaning they are inaccurate to within 0.1% of the formal vote." style="max-width: 200px; word-wrap: break-word;">
-                        <span class="question-mark">?</span>
+                            // Select elements with specific classes and IDs
+                            var questionMarks = document.querySelectorAll('.question-mark');
+                            var tooltipContainers = document.querySelectorAll('.tooltip-container');
+                            var warnheader = document.querySelectorAll('.tooltip-content');
+
+                            // Select additional elements to hide
+                            var elementsToHide = [
+                                document.getElementById('electionInfoTable'),
+                                document.getElementById('content'),
+                            ];
+
+                            // Check if the selected label contains 'Federal'
+                            if (selectedLabel.includes('Federal')) {
+                                questionMarks.forEach(function (questionMark) {
+                                    questionMark.style.display = 'block';
+                                });
+
+                                tooltipContainers.forEach(function (tooltipContainer) {
+                                    tooltipContainer.style.display = 'flex';
+                                });
+
+                                // Show the warnheader
+                                warnheader.forEach(function (warn) {
+                                    warn.style.display = 'block';
+                                });
+                                document.getElementById('electionInfoTable').style.display = 'block'
+                            } else {
+                                // Hide all elements with class 'question-mark' and 'tooltip-container'
+                                questionMarks.forEach(function (questionMark) {
+                                    questionMark.style.display = 'none';
+                                });
+
+                                tooltipContainers.forEach(function (tooltipContainer) {
+                                    tooltipContainer.style.display = 'none';
+                                });
+
+                                // Hide additional elements
+                                elementsToHide.forEach(function (element) {
+                                    if (element) {
+                                        element.style.display = 'none';
+                                    }
+                                });
+
+                                // Hide the warnheader
+                                warnheader.forEach(function (warn) {
+                                    warn.style.display = 'none';
+                                });
+                            }
+                        });
+                    </script>
+
+
+
+
+                    <div class="tooltip-container" style="display: none; align-items: center; position: relative;">
+                        <h5 style="display: inline-block; margin-right: 5px;">Please note: Federal 2CP Vote counts from 1983 and earlier are inaccurate.</h5>
+                        <div class="tooltip" style="display: inline-block; margin-top: -22px" data-tooltip="Please note: Federal 2CP Vote counts from 1983 and earlier are inaccurate;">
+                            <span class="question-mark">?</span>
+                        </div>
+                        <div style="display: none;" class="tooltip-content">
+                            <p>
+                                2CP vote counts prior to 1984 were not recorded in electorates where a majority of votes were achieved by one candidate.
+                                The vote counts provided are based on the 2CP percentage, meaning they are inaccurate to within 0.1% of the formal vote.
+                            </p>
+                        </div>
                     </div>
 
 
 
 
+
+
+
+                    <div id="content" class="tooltip" style="display: none">2CP (Two-candidate preferred) represents the percentage of votes
+                    a candidate received after the distribution of preferences. Prior to the 1919 election, Australian Federal elections used
+                    First Past the Post, where voters could not allocate their preferences. As such, in elections before 1919, there is no 2CP.
+                    Instead, the majority is recorded, which is the difference in votes between the winning candidate and the second candidate.</div>
                     <div class="table-responsive" id="electionInfoTableContainer" style="margin-top: 20px; display: none;">
                         <table id="electionInfoTable">
                             <tr>
-                                <th><?= __('2CP/Majority') ?></th>
+                                <th style="display: flex;">
+                                        <?= __('2CP/Majority ') ?>
+                                    <p class="question-mark" style="display: none; margin-left: 5px; margin-top: 5px;" onclick="toggleTooltip('content')">?</p>
+
+                                </th>
                                 <th><?= __('Elected Candidate') ?></th>
                                 <th><?= __('Party') ?></th>
                                 <th><?= __('Votes') ?></th>
@@ -330,3 +406,31 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $(".question-mark").click(function () {
+            // Toggle the tooltip-content within the same tooltip-container
+            $(this).closest(".tooltip-container").find(".tooltip-content").toggle();
+        });
+
+        // Hide all tooltip-content when clicking outside any tooltip-container
+        $(document).click(function (event) {
+            if (!$(event.target).closest(".tooltip-container").length) {
+                $(".tooltip-content").hide();
+            }
+        });
+    });
+</script>
+
+<script>
+    // Function to toggle the visibility of the tooltip
+    function toggleTooltip(elementId) {
+        var tooltip = document.getElementById(elementId);
+        if (tooltip.style.display === 'block') {
+            tooltip.style.display = 'none';
+        } else {
+            tooltip.style.display = 'block';
+        }
+    }
+</script>

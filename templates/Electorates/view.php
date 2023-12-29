@@ -4,7 +4,44 @@
  * @var \App\Model\Entity\Electorate $electorate
  */
 
-?>
+?><style>
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #333;
+        color: #fff;
+        padding: 8px;
+        border-radius: 4px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .tooltip:hover::after {
+        opacity: 1;
+    }
+
+    .question-mark {
+        cursor: pointer;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-color: #ccc;
+        color: #fff;
+        text-align: center;
+        line-height: 16px;
+        border-radius: 50%;
+        font-size: 12px;
+    }
+</style>
 <div class="row">
 
     <div class="column-responsive column-80">
@@ -185,6 +222,15 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
+
+                    <h5 style="display: inline-block; margin-right: 5px;">Please note: 2CP Vote counts from 1983 and earlier may be inaccurate.</h5>
+                    <div class="tooltip" data-tooltip="2CP vote counts prior to 1984 were not recorded in electorates where a majority of votes was achieved by one candidate.
+                    The vote counts provided are based on the 2CP percentage, meaning they are inaccurate to within 0.1% of the formal vote." style="max-width: 200px; word-wrap: break-word;">
+                        <span class="question-mark">?</span>
+                    </div>
+
+
+
 
                     <div class="table-responsive" id="electionInfoTableContainer" style="margin-top: 20px; display: none;">
                         <table id="electionInfoTable">

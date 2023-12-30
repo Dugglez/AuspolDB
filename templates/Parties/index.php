@@ -67,7 +67,8 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#searchButton').on('click', function() {
+        // Function to handle party search
+        function performPartySearch() {
             // Get the search input value
             var searchString = $('#partySearch').val();
 
@@ -76,6 +77,19 @@
 
             // Navigate to the link
             window.location.href = searchLink;
+        }
+
+        // Event listener for Enter key press
+        $('#partySearch').on('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default form submission behavior
+                performPartySearch();
+            }
+        });
+
+        // Event listener for button click
+        $('#searchButton').on('click', function() {
+            performPartySearch();
         });
     });
 </script>

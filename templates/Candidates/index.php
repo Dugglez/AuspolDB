@@ -72,9 +72,11 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script>
     $(document).ready(function() {
-        $('#searchButton').on('click', function() {
+        // Function to handle candidate search
+        function performCandidateSearch() {
             // Get the search input value
             var searchString = $('#candidateSearch').val();
 
@@ -83,8 +85,19 @@
 
             // Navigate to the link
             window.location.href = searchLink;
+        }
+
+        // Event listener for Enter key press
+        $('#candidateSearch').on('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default form submission behavior
+                performCandidateSearch();
+            }
+        });
+
+        // Event listener for button click
+        $('#searchButton').on('click', function() {
+            performCandidateSearch();
         });
     });
 </script>
-
-

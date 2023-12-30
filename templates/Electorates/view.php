@@ -54,7 +54,17 @@
                 </tr>
                 <tr>
                     <th><?= __('Type') ?></th>
-                    <td><?= h($electorate->type) ?></td>
+                    <td>
+                        <?= h($electorate->type) ?>
+
+                        <?php
+                        // Check conditions for displaying the message
+                        if (($electorate->name === "South Australia" || $electorate->name === "Tasmania") && $electorate->type === 'Division') {
+                            $memberCount = ($electorate->name === "South Australia") ? 7 : 5;
+                            echo " (Proportional district that elected $memberCount members, disregard 2CP)";
+                        }
+                        ?>
+                    </td>
                 </tr>
 
                 <tr>

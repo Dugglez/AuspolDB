@@ -115,10 +115,16 @@
 
                             <td>
                                 <?php
-                                $outgoingParty = $parties->get($elections->outgoing_government_party);
-                                echo $this->Html->link(h($outgoingParty->name), ['controller' => 'Parties', 'action' => 'view', $outgoingParty->id]);
+                                $outgoingParty = isset($elections->outgoing_government_party) ? $parties->get($elections->outgoing_government_party) : null;
+
+                                if (isset($outgoingParty->name, $outgoingParty->id)) {
+                                    echo $this->Html->link(h($outgoingParty->name), ['controller' => 'Parties', 'action' => 'view', $outgoingParty->id]);
+                                } else {
+                                    echo 'None'; // or any other default value or message
+                                }
                                 ?>
                             </td>
+
 
                             <td>
                                 <?php

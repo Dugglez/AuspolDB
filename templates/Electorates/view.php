@@ -323,7 +323,14 @@
                             </tr>
                             <?php foreach ($elections_electorates as $electionsElectorate) : ?>
                                 <tr data-election-id="<?= h($electionsElectorate->election_id) ?>">
-                                    <td><?= h($electionsElectorate->twocp_or_majority) ?></td>
+                                    <td>
+                                        <?php
+                                        $twocp_or_majority = h($electionsElectorate->twocp_or_majority);
+
+                                        echo ($twocp_or_majority == 99.99) ? 'Uncontested' : $twocp_or_majority;
+                                        ?>
+                                    </td>
+
                                     <td>
                                         <?php
                                         // Get the winning candidate information
@@ -342,18 +349,23 @@
                                     <td>
                                         <?php
                                         // Get the second candidate information
-                                        $secondCandidate = $candidates->get($electionsElectorate->second_candidate);
-                                        echo $this->Html->link(h($secondCandidate->name), ['controller' => 'Candidates', 'action' => 'view', $secondCandidate->id]);
+                                        $secondCandidate = isset($electionsElectorate->second_candidate) ? $candidates->get($electionsElectorate->second_candidate) : null;
+                                        echo isset($secondCandidate->name) ? $this->Html->link(h($secondCandidate->name), ['controller' => 'Candidates', 'action' => 'view', $secondCandidate->id]) : 'None';
                                         ?>
                                     </td>
                                     <td>
                                         <?php
                                         // Get the second party information
-                                        $secondParty = $parties->get($electionsElectorate->second_party);
-                                        echo $this->Html->link(h($secondParty->name), ['controller' => 'Parties', 'action' => 'view', $secondParty->id]);
+                                        $secondParty = isset($electionsElectorate->second_candidate) ? $parties->get($electionsElectorate->second_party) : null;
+                                        echo isset($secondParty->name) ? $this->Html->link(h($secondParty->name), ['controller' => 'Parties', 'action' => 'view', $secondParty->id]) : 'None';
                                         ?>
                                     </td>
-                                    <td><?= h($electionsElectorate->second_votes) ?></td>
+                                    <td>
+                                        <?php
+                                        echo isset($electionsElectorate->second_votes) ? h($electionsElectorate->second_votes) : 'None';
+                                        ?>
+                                    </td>
+
                                 </tr>
                             <?php endforeach; ?>
                         </table><br>

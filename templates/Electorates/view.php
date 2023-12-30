@@ -317,8 +317,8 @@
 
 
                     <div id="content" class="tooltip" style="display: none; background-color: #333; color: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); font-size: 14px; ">
-                        2CP (Two-candidate preferred) represents the percentage of votes
-                        a candidate received after the distribution of preferences. Prior to the 1919 election, Australian Federal elections used
+                        2CP (Two-candidate preferred) represents the percentage of formal votes
+                        a candidate received after the distribution of preferences. Prior to the 1919 election, Australian federal elections used
                         First Past the Post, where voters could not allocate their preferences. As such, in elections before 1919, there is no 2CP.
                         Instead, the majority is recorded, which is the difference in votes between the winning candidate and the second candidate.
                     </div>
@@ -343,9 +343,21 @@
                                         <?php
                                         $twocp_or_majority = h($electionsElectorate->twocp_or_majority);
 
-                                        echo ($twocp_or_majority == 99.99) ? 'Uncontested' : $twocp_or_majority;
+                                        if ($twocp_or_majority == 99.99) {
+                                            echo 'Uncontested';
+                                        } else {
+                                            // Check if $twocp_or_majority is greater than 100
+                                            if ($twocp_or_majority > 100) {
+                                                // Display as integer with no decimals
+                                                echo intval($twocp_or_majority);
+                                            } else {
+                                                // Display as it is
+                                                echo $twocp_or_majority;
+                                            }
+                                        }
                                         ?>
                                     </td>
+
 
                                     <td>
                                         <?php

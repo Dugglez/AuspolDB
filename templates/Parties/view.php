@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Party $party
  */
+
 ?>
 <div class="row">
 
@@ -65,31 +66,14 @@
                 <h4><?= __('Election Results') ?></h4>
                 <?php if (!empty($party->candidates_elections_electorates)) : ?>
 
-                    <?php
-// Get unique election IDs and jurisdictions from $party->CEE
-                    $uniqueElectionIds = array_unique(array_column($party->candidates_elections_electorates, 'election_id'));
-                    $uniqueElections = [];
 
-                    foreach ($uniqueElectionIds as $uniqueElectionId) {
-                        // Find the corresponding election
-                        $election = $elections->get($uniqueElectionId);
-
-                        // Concatenate jurisdiction with date (formatted as year)
-                        $electionDate = $election->date;
-                        $electionYear = $electionDate->format('Y');
-                        $electionLabel = $electionYear . ' ' . $election->jurisdiction;
-
-                        // Store in associative array
-                        $uniqueElections[$uniqueElectionId] = $electionLabel;
-                    }
-                    ?>
 
                     <!-- Display a dropdown for each unique election ID next to the table heading -->
                     <div style="display: flex; align-items: center;">
                         <h5><?= __('Select Election: ') ?></h5>
                         <select id="electionDropdown" style="margin-left: 10px;">
-                            <option value="All">All results</option>
-                            <?php foreach ($uniqueElections as $uniqueElectionId => $electionLabel) : ?>
+                            <option>Select Election</option>
+                            <?php foreach ($uniqueElections as $electionLabel => $uniqueElectionId) : ?>
                                 <option value="<?= h($uniqueElectionId) ?>"><?= h($electionLabel) ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -155,38 +139,27 @@
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<!-- Add an event listener to the election dropdown to trigger the filtering -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var electionDropdown = document.getElementById('electionDropdown');
-        var tableRows = document.querySelectorAll('#resultsTable tbody tr');
+    $(document).ready(function () {
+        var electionDropdown = $('#electionDropdown');
 
-        electionDropdown.addEventListener('change', function () {
-            var selectedElectionId = this.value;
+        electionDropdown.on('change', function () {
+            var selectedElectionId = $(this).val();
 
-            // Hide all rows initially, excluding the first row (header)
-            tableRows.forEach(function (row, index) {
-                if (index > 0) {
-                    row.style.display = 'none';
-                }
-            });
+            // Construct the query string
+            var queryString = selectedElectionId ? '?election=' + encodeURIComponent(selectedElectionId) : '';
 
-            // Show rows for the selected election or show all if "All" is selected
-            if (selectedElectionId === 'All') {
-                tableRows.forEach(function (row) {
-                    row.style.display = '';
-                });
-            } else {
-                var selectedRows = document.querySelectorAll('#resultsTable tbody tr[data-election-id="' + selectedElectionId + '"]');
-                selectedRows.forEach(function (row) {
-                    row.style.display = '';
-                });
-            }
+            // Update the URL with the query string
+            var currentUrl = window.location.href.split('?')[0];
+            var newUrl = currentUrl + queryString;
+
+            // Redirect to the new URL
+            window.location.href = newUrl;
         });
     });
-
 </script>
 
 

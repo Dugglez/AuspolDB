@@ -63,8 +63,9 @@
                 <?php endif; ?>
             </div>
             <div class="related">
-                <h4><?= __('Election Results') ?></h4>
                 <?php if (!empty($party->candidates_elections_electorates)) : ?>
+                <h4><?= __('Lower House Results') ?></h4>
+
 
 
 
@@ -92,6 +93,7 @@
                             <tr data-election-id="<?= h($candidatesElectionsElectorates->election_id) ?>">
                                 <td>
                                     <?php
+
                                     $candidate = $candidates->get($candidatesElectionsElectorates->candidate_id);
                                     echo $this->Html->link(h($candidate->name), ['controller' => 'Candidates', 'action' => 'view', $candidate->id]);
                                     ?>
@@ -131,9 +133,57 @@
                         <?php endforeach; ?>
                     </table>
                 </div>
-
-            </div>
                 <?php endif; ?>
+
+
+
+                <?php if (!empty($upperHouseContests)) : ?>
+                    <h4><?= __('Upper House Results') ?></h4>
+                    <div class="table-responsive">
+                        <table id="resultsTable">
+                            <tr>
+                                <th><?= __('Candidate') ?></th>
+                                <th><?= __('Election') ?></th>
+                                <th><?= __('State') ?></th>
+                                <th><?= __('Votes') ?></th>
+                                <th><?= __('Elected') ?></th>
+                            </tr>
+                            <?php foreach ($upperHouseContests as $contest) : ?>
+                                <tr data-election-id="<?= h($contest->election_id) ?>">
+                                    <td>
+                                        <?php
+
+                                        $candidate = $candidates->get($contest->candidate_id);
+                                        echo $this->Html->link(h($candidate->name), ['controller' => 'Candidates', 'action' => 'view', $candidate->id]);
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $election = $elections->get($contest->election_id);
+                                        $electionDate = $election->date;
+                                        $electionYear = $electionDate->format('Y');
+                                        $electionLabel = $electionYear . ' ' . $election->jurisdiction;
+
+                                        echo $this->Html->link(h($electionLabel), ['controller' => 'Elections', 'action' => 'view', $election->id]);
+                                        ?>
+
+                                    </td>
+                                    <td>
+                                        <?php
+
+                                        echo h($contest->state);
+                                        ?>
+                                    </td>
+                                    <td><?= h($contest->votes) ?></td>
+
+                                    <td><?= h($contest->position ? "Yes (".$contest->position.")": "No") ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
+
             </div>
 
         </div>

@@ -242,53 +242,60 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
 
             </div>
 
-            <div class="related"> <?php if (!empty($election->electorates)) : ?>
-                <div style="display: flex; align-items: center;">
-                <h4 style="margin-right: 100px"><?= __('Electorates') ?></h4>
-                    <select id="stateSelector" style="margin-right: -250px;max-width: 255px;">
-                        <option value="">All States/Territories</option>
-                        <option value="ACT">Australian Capital Territory</option>
-                        <option value="NSW">New South Wales</option>
-                        <option value="NT">Northern Territory</option>
-                        <option value="QLD">Queensland</option>
-                        <option value="SA">South Australia</option>
-                        <option value="TAS">Tasmania</option>
-                        <option value="VIC">Victoria</option>
-                        <option value="WA">Western Australia</option>
-                    </select>
+            <div class="related">
+                <?php if (!empty($election->electorates)) : ?>
+                    <div style="display: flex; align-items: center;">
+                        <h4 style="margin-right: 100px"><?= __('Electorates') ?></h4>
+                        <select id="stateSelector" style="margin-right: -250px;max-width: 255px;">
+                            <option value="">All States/Territories</option>
+                            <option value="ACT">Australian Capital Territory</option>
+                            <option value="NSW">New South Wales</option>
+                            <option value="NT">Northern Territory</option>
+                            <option value="QLD">Queensland</option>
+                            <option value="SA">South Australia</option>
+                            <option value="TAS">Tasmania</option>
+                            <option value="VIC">Victoria</option>
+                            <option value="WA">Western Australia</option>
+                        </select>
+                        <input type="text" id="electorateSearch" placeholder="Search electorates..." style="max-width:200px; margin-left: 280px;">
+                        <button id="searchElectorateButton" class="btn-custom" style="margin-left: 10px; margin-bottom: 15px">Search</button>
+                    </div>
 
-                    <input type="text" id="electorateSearch" placeholder="Search electorates..." style="max-width:200px; margin-left: 280px;">
-                    <button id="searchElectorateButton" class="btn-custom" style="margin-left: 10px; margin-bottom: 15px">Search</button>
-                </div>
-
+                    <!-- Collapsible Electorates Table -->
                     <div class="table-responsive">
-                        <table id="electoratesTable">
-                            <tr>
-                                <th><?= __('Name') ?></th>
-                                <th><?= __('Jurisdiction') ?></th>
-                                <th><?= __('Type') ?></th>
-                            </tr>
-                            <?php foreach ($election->electorates as $electorates) : ?>
-                                <tr data-state="<?= h($electorates->jurisdiction) ?>">
-                                    <td><?= $this->Html->link(
-                                            h($electorates->name),
-                                            ['controller' => 'Electorates', 'action' => 'view', $electorates->id]
-                                        ) ?></td>
-                                    <td><?= h($electorates->jurisdiction) ?></td>
-                                    <td><?= h($electorates->type) ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </table>
+                        <div class="collapsible-box">
+                            <button class="collapsible btn-custom">Show Table</button>
+                            <div class="content" style="display: none">
+                                <table>
+                                    <tr>
+                                        <th><?= __('Name') ?></th>
+                                        <th><?= __('Jurisdiction') ?></th>
+                                        <th><?= __('Type') ?></th>
+                                    </tr>
+                                    <?php foreach ($election->electorates as $electorate) : ?>
+                                        <tr data-state="<?= h($electorate->jurisdiction) ?>">
+                                            <td><?= $this->Html->link(
+                                                    h($electorate->name),
+                                                    ['controller' => 'Electorates', 'action' => 'view', $electorate->id]
+                                                ) ?></td>
+                                            <td><?= h($electorate->jurisdiction) ?></td>
+                                            <td><?= h($electorate->type) ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 <?php endif; ?>
             </div>
 
-            <!-- eventually 8 buttons for senate results in each jurisdiction-->
+
             </div>
 
         </div>
     </div>
 </div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -306,6 +313,25 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
         });
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        var button = $("#searchElectorateButton");
+        var content = $(".content");
+
+        button.on("click", function() {
+            content.slideToggle(500, function() {
+                if (content.is(":visible")) {
+                    $('html, body').animate({
+                        scrollTop: content.offset().top
+                    }, 500);
+                }
+            });
+        });
+    });
+</script>
+
+
 
 <script>
     $(document).ready(function () {

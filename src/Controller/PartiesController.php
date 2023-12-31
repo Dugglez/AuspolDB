@@ -55,6 +55,11 @@ class PartiesController extends AppController
             array_column($party['candidates_elections_electorates'], 'election_id')
         );
 
+        $upperHouseContests = $this->fetchTable('CandidatesElectionsStates')->find('all', [
+            'conditions' => ['CandidatesElectionsStates.party_id' => $id],
+        ])->toArray();
+
+
         // Initialize the associative array for unique elections
         $uniqueElections = [];
 
@@ -88,7 +93,7 @@ class PartiesController extends AppController
             $uniqueElections[$electionLabel] = $uniqueElectionId;
         }
 
-        $this->set(compact('party', 'candidates', 'electorates', 'elections', 'uniqueElections'));
+        $this->set(compact('party', 'candidates', 'electorates', 'elections', 'uniqueElections', 'upperHouseContests'));
     }
 
 

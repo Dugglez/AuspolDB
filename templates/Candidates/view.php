@@ -31,7 +31,7 @@
                                 <th><?= __('Party') ?></th>
                                 <th><?= __('Votes') ?></th>
                                 <th><?= __('Swing') ?></th>
-                                <th><?= __('Elected?') ?></th>
+                                <th><?= __('Elected') ?></th>
 
                             </tr>
                             <?php foreach ($lowerHouseContests as $lowerHouseContest) : ?>

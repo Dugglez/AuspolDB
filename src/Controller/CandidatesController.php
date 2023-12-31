@@ -59,11 +59,15 @@ class CandidatesController extends AppController
             'conditions' => ['CandidatesElectionsElectorates.candidate_id' => $id],
         ])->toArray();
 
+        $upperHouseContests = $this->fetchTable('CandidatesElectionsStates')->find('all', [
+            'conditions' => ['CandidatesElectionsStates.candidate_id' => $id],
+        ])->toArray();
+
         $elections = $this->fetchTable('Elections');
         $electorates = $this->fetchTable('Electorates');
         $parties = $this->fetchTable('Parties');
 
-        $this->set(compact('candidate','lowerHouseContests', 'elections', 'electorates', 'parties'));
+        $this->set(compact('candidate','lowerHouseContests', 'upperHouseContests','elections', 'electorates', 'parties'));
     }
 
     /**

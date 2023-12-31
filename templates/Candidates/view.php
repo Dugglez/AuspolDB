@@ -20,8 +20,9 @@
 
             </div>
             <div class="related">
-                <h4><?= __('Lower House Contests') ?></h4>
                 <?php if (!empty($lowerHouseContests)) : ?>
+                <h4><?= __('Lower House Contests') ?></h4>
+
                     <div class="table-responsive">
                         <table>
                             <tr>
@@ -117,34 +118,32 @@
                     </div>
                 <?php endif; ?>
             </div>
-            <?php if (!empty($candidate->elections_states)) : ?>
+            <?php if (!empty($upperHouseContests)) : ?>
             <div class="related">
                 <h4><?= __('Upper House Contests') ?></h4>
 
                 <div class="table-responsive">
                     <table>
                         <tr>
-                            <th><?= __('Id') ?></th>
+                            <th><?= __('Election') ?></th>
                             <th><?= __('State') ?></th>
-                            <th><?= __('Composition') ?></th>
-                            <th><?= __('Formal Votes') ?></th>
-                            <th><?= __('Informal Votes') ?></th>
-                            <th><?= __('Turnout') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
+                            <th><?= __('Party') ?></th>
+                            <th><?= __('Votes') ?></th>
+                            <th><?= __('Elected?') ?></th>
+
                         </tr>
-                        <?php foreach ($candidate->elections_states as $electionsStates) : ?>
+                        <?php foreach ($upperHouseContests as $electionsStates) : ?>
                         <tr>
-                            <td><?= h($electionsStates->id) ?></td>
+                            <td><?= $this->Html->link(h($elections->get($electionsStates->election_id)->date->format('Y')
+                                    . ' ' . h($elections->get($electionsStates->election_id)->jurisdiction)),
+                                    ['controller' => 'Elections', 'action' => 'view', $electionsStates->election_id]
+                                ) ?></td>
                             <td><?= h($electionsStates->state) ?></td>
-                            <td><?= h($electionsStates->composition) ?></td>
-                            <td><?= h($electionsStates->formal_votes) ?></td>
-                            <td><?= h($electionsStates->informal_votes) ?></td>
-                            <td><?= h($electionsStates->turnout) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'ElectionsStates', 'action' => 'view', $electionsStates->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'ElectionsStates', 'action' => 'edit', $electionsStates->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'ElectionsStates', 'action' => 'delete', $electionsStates->id], ['confirm' => __('Are you sure you want to delete # {0}?', $electionsStates->id)]) ?>
-                            </td>
+                            <td><?= $this->Html->link(h($parties->get($electionsStates->party_id)->name),
+                                    ['controller' => 'Parties', 'action' => 'view', $electionsStates->party_id]
+                                ) ?></td>
+                            <td><?= h($electionsStates->votes) ?></td>
+                            <td><?= h($electionsStates->position ? "Yes (".$electionsStates->position.")": "No") ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </table>
@@ -167,7 +166,7 @@
                         </tr>
                         <?php foreach ($candidate->candidates_parties_elections as $candidatesPartiesElections) : ?>
                             <tr>
-                                <td> 
+                                <td>
                                 <?php
                                 $partyId =$candidatesPartiesElections->party_id;
                                 $party = $parties->get($partyId);

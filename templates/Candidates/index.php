@@ -79,9 +79,10 @@
         function performCandidateSearch() {
             // Get the search input value
             var searchString = $('#candidateSearch').val();
+            var modifiedSearchString = searchString.replace(/'/g, '`');
 
             // Create a link with the search query
-            var searchLink = '<?= $this->Url->build(['controller' => 'Candidates', 'action' => 'index']) ?>?search=' + searchString;
+            var searchLink = '<?= $this->Url->build(['controller' => 'Candidates', 'action' => 'index']) ?>?search=' + modifiedSearchString;
 
             // Navigate to the link
             window.location.href = searchLink;

@@ -245,7 +245,7 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
             <div class="related">
                 <?php if (!empty($election->electorates)) : ?>
                     <div style="display: flex; align-items: center;">
-                        <h4 style="margin-right: 100px"><?= __('Electorates') ?></h4>
+                        <h4 style="margin-right: 100px;white-space: nowrap;"><?= __('Lower House') ?></h4>
                         <select id="stateSelector" style="margin-right: -250px;max-width: 255px;">
                             <option value="">All States/Territories</option>
                             <option value="ACT">Australian Capital Territory</option>
@@ -288,6 +288,69 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                     </div>
                 <?php endif; ?>
             </div>
+            <div class="related">
+                <?php if (!empty($upperHouseContests)) : ?>
+                    <div style="display: flex; align-items: center;">
+                        <h4 style="margin-right: 100px; white-space: nowrap;"><?= __('Upper House') ?></h4>
+
+                        <select id="stateSenateSelector" style="margin-right: -250px;max-width: 255px;">
+                            <option value="">Please select</option>
+                            <option value="ACT">Australian Capital Territory</option>
+                            <option value="NSW">New South Wales</option>
+                            <option value="NT">Northern Territory</option>
+                            <option value="QLD">Queensland</option>
+                            <option value="SA">South Australia</option>
+                            <option value="TAS">Tasmania</option>
+                            <option value="VIC">Victoria</option>
+                            <option value="WA">Western Australia</option>
+                        </select>
+
+                    </div>
+
+                    <!-- Collapsible Electorates Table -->
+                    <div class="table-responsive">
+                        <div class="collapsible-box">
+                            <button class="collapsible btn-custom">Show Table</button>
+                            <div class="content" style="display: none">
+                                <table>
+                                    <tr>
+                                        <th>Candidate</th>
+                                        <th>Party</th>
+                                        <th>Votes</th>
+                                        <th>Elected</th>
+                                    </tr>
+                                    <?php foreach ($upperHouseContests as $contest) : ?>
+                                        <tr>
+                                            <td>
+                                                <?php
+
+                                                $candidate = $candidates->get($contest->candidate_id);
+                                                echo $this->Html->link(h($candidate->name), ['controller' => 'Candidates', 'action' => 'view', $candidate->id]);
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?=
+                                                $this->Html->link(
+                                                    str_replace('&amp;', '&', $parties->get($contest->party_id)->name),
+                                                    ['controller' => 'Parties', 'action' => 'view', $contest->party_id]
+                                                ) ?>
+                                            </td>
+
+
+
+
+                                            <td><?= h($contest->votes) ?></td>
+
+                                            <td><?= h($contest->position ? "Yes (".$contest->position.")": "No") ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
 
 
             </div>
@@ -296,9 +359,35 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
     </div>
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br>
-
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Listen for changes in the stateSenateSelector dropdown
+        $('#stateSenateSelector').on('change', function () {
+            // Get the selected value
+            var selectedValue = $(this).val();
+
+            // Get the current URL
+            var currentUrl = window.location.href;
+
+            // Check if the URL already contains a 'senate' query parameter
+            var regex = new RegExp('[?&]senate(=([^&#]*)|&|#|$)');
+            var results = regex.exec(currentUrl);
+
+            if (results === null) {
+                // If 'senate' query parameter doesn't exist, append it
+                var separator = currentUrl.includes('?') ? '&' : '?';
+                var updatedUrl = currentUrl + separator + 'senate=' + selectedValue;
+                window.location.href = updatedUrl;
+            } else {
+                // If 'senate' query parameter exists, replace its value
+                var updatedUrl = currentUrl.replace(results[0], '?senate=' + selectedValue);
+                window.location.href = updatedUrl;
+            }
+        });
+    });
+</script>
+
 <script>
     $(document).ready(function() {
         $('#searchElectorateButton').on('click', function() {

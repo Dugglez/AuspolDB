@@ -48,29 +48,50 @@ class ElectionsController extends AppController
             'contain' => ['Electorates', 'CandidatesElectionsElectorates', 'CandidatesElectionsStates', 'CandidatesPartiesElections'],
         ];
 
-
         $election = $this->Elections->get($id, $options);
 
-        // Fetch Electorates with the necessary filtering
+// Fetch Electorates with the necessary filtering
+        $electorateIds = $this->fetchTable('ElectionsElectorates')
+            ->find('list', [
+                'conditions' => [
+                    'election_id' => $id,
+                ],
+                'valueField' => 'electorate_id',
+            ])->toArray();
+
         $electorates = $this->fetchTable('Electorates')
             ->find('all', [
                 'conditions' => [
+                    'id IN' => $electorateIds,
                     'name LIKE' => '%' . $searchQuery . '%',
                 ],
                 'order' => ['name' => 'ASC'], // Order by name in ascending order
             ]);
 
-
-
-
-        // Add the filtered Electorates to the $election object
+// Add the filtered Electorates to the $election object
         $election->electorates = $electorates;
+
+
+        $senateQueryString = $this->request->getQuery('senate');
+
+        $queryConditions = ['CandidatesElectionsStates.election_id' => $id];
+        if ($senateQueryString !== null) {
+            $queryConditions['CandidatesElectionsStates.state'] = $senateQueryString;
+        }
+
+        $upperHouseContests = $this->fetchTable('CandidatesElectionsStates')->find('all', [
+            'conditions' => $queryConditions,
+            'limit' => ($senateQueryString === null) ? 200 : null,
+        ])->toArray();
+
+
+
 
         $candidates = $this->fetchTable('Candidates');
         $electorates = $this->fetchTable('Electorates');
         $parties = $this->fetchTable('Parties');
 
-        $this->set(compact('election', 'parties', 'candidates', 'electorates', 'searchQuery'));
+        $this->set(compact('election', 'parties', 'candidates', 'electorates', 'searchQuery','upperHouseContests'));
     }
 
 

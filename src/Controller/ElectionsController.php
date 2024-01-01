@@ -91,7 +91,7 @@ class ElectionsController extends AppController
         $electorates = $this->fetchTable('Electorates');
         $parties = $this->fetchTable('Parties');
 
-        $this->set(compact('election', 'parties', 'candidates', 'electorates', 'searchQuery','upperHouseContests'));
+        $this->set(compact('election', 'parties', 'candidates', 'electorates', 'searchQuery','upperHouseContests','electorateIds'));
     }
 
 

@@ -316,6 +316,7 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                                     <tr>
                                         <th>Candidate</th>
                                         <th>Party</th>
+                                        <th>State</th>
                                         <th>Votes</th>
                                         <th>Elected</th>
                                     </tr>
@@ -337,7 +338,7 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                                             </td>
 
 
-
+                                            <td><?= h($contest->state) ?></td>
 
                                             <td><?= h($contest->votes) ?></td>
 
@@ -430,20 +431,17 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
             var selectedState = $(this).val();
 
             // Hide all electorates
-            $('table#electoratesTable tr').hide();
+            $('.collapsible-box .content table tr').hide();
 
             // Show only electorates that match the selected state
             if (selectedState !== '') {
-                $('table#electoratesTable tr[data-state="' + selectedState + '"]').show();
+                $('.collapsible-box .content table tr[data-state="' + selectedState + '"]').show();
             } else {
                 // Show all electorates if no state is selected
-                $('table#electoratesTable tr').show();
+                $('.collapsible-box .content table tr').show();
             }
 
-            // Jump down 50 pixels
-            $('html, body').animate({
-                scrollTop: $(document).scrollTop() + 200
-            }, 500);
+
         });
     });
 </script>

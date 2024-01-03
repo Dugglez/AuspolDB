@@ -198,7 +198,6 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                 }
             }
 
-
             // Sort candidates data based on the winner value
             usort($candidatesData, function ($a, $b) {
                 // Assuming 'winner' values are 'Incoming' or 'Outgoing'
@@ -242,50 +241,51 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
 
             </div>
 
-            <div class="related">
-                <?php if (!empty($election->electorates)) : ?>
-                    <div style="display: flex; align-items: center;">
-                        <h4 style="margin-right: 100px;white-space: nowrap;"><?= __('Lower House') ?></h4>
-                        <select id="stateSelector" style="margin-right: -250px;max-width: 255px;">
-                            <option value="">All States/Territories</option>
-                            <option value="ACT">Australian Capital Territory</option>
-                            <option value="NSW">New South Wales</option>
-                            <option value="NT">Northern Territory</option>
-                            <option value="QLD">Queensland</option>
-                            <option value="SA">South Australia</option>
-                            <option value="TAS">Tasmania</option>
-                            <option value="VIC">Victoria</option>
-                            <option value="WA">Western Australia</option>
-                        </select>
-                        <input type="text" id="electorateSearch" placeholder="Search electorates..." style="max-width:200px; margin-left: 280px;">
-                        <button id="searchElectorateButton" class="btn-custom" style="margin-left: 10px; margin-bottom: 15px">Search</button>
-                    </div>
 
-                    <!-- Collapsible Electorates Table -->
-                    <div class="table-responsive">
-                        <div class="collapsible-box">
-                            <button class="collapsible btn-custom">Show Table</button>
-                            <div class="content" style="display: none">
-                                <table>
-                                    <tr>
-                                        <th><?= __('Name') ?></th>
-                                        <th><?= __('Jurisdiction') ?></th>
-                                        <th><?= __('Type') ?></th>
+            <div class="related">
+                <?php if ($electionType != 'Senate') : ?>
+                <div style="display: flex; align-items: center;">
+                    <h4 style="margin-right: 100px;white-space: nowrap;"><?= __('Lower House') ?></h4>
+                    <select id="stateSelector" style="margin-right: -250px; max-width: 255px;" onchange="checkSelectedOption()">
+                        <option value="">All States/Territories</option>
+                        <option value="ACT">Australian Capital Territory</option>
+                        <option value="NSW">New South Wales</option>
+                        <option value="NT">Northern Territory</option>
+                        <option value="QLD">Queensland</option>
+                        <option value="SA">South Australia</option>
+                        <option value="TAS">Tasmania</option>
+                        <option value="VIC">Victoria</option>
+                        <option value="WA">Western Australia</option>
+                    </select>
+                    <input type="text" id="electorateSearch" placeholder="Search electorates..." style="max-width:200px; margin-left: 280px;">
+                    <button id="searchElectorateButton" class="btn-custom" style="margin-left: 10px; margin-bottom: 15px">Search</button>
+                </div>
+
+                <!-- Collapsible Electorates Table -->
+                <div class="table-responsive">
+                    <div class="collapsible-box">
+                        <button class="collapsible btn-custom">Show Table</button>
+                        <div id="repsTable" class="content" style="display: none">
+                            <table>
+                                <tr>
+                                    <th><?= __('Name') ?></th>
+                                    <th><?= __('Jurisdiction') ?></th>
+                                    <th><?= __('Type') ?></th>
+                                </tr>
+                                <?php foreach ($election->electorates as $electorate) : ?>
+                                    <tr data-state="<?= h($electorate->jurisdiction) ?>">
+                                        <td><?= $this->Html->link(
+                                                h($electorate->name),
+                                                ['controller' => 'Electorates', 'action' => 'view', $electorate->id]
+                                            ) ?></td>
+                                        <td><?= h($electorate->jurisdiction) ?></td>
+                                        <td><?= h($electorate->type) ?></td>
                                     </tr>
-                                    <?php foreach ($election->electorates as $electorate) : ?>
-                                        <tr data-state="<?= h($electorate->jurisdiction) ?>">
-                                            <td><?= $this->Html->link(
-                                                    h($electorate->name),
-                                                    ['controller' => 'Electorates', 'action' => 'view', $electorate->id]
-                                                ) ?></td>
-                                            <td><?= h($electorate->jurisdiction) ?></td>
-                                            <td><?= h($electorate->type) ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </table>
-                            </div>
+                                <?php endforeach; ?>
+                            </table>
                         </div>
                     </div>
+                </div>
                 <?php endif; ?>
             </div>
             <div class="related">
@@ -311,7 +311,7 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                     <div class="table-responsive">
                         <div class="collapsible-box">
                             <button class="collapsible btn-custom">Show Table</button>
-                            <div class="content" style="display: none">
+                            <div id="senateTable" class="content" style="display: none">
                                 <table>
                                     <tr>
                                         <th>Candidate</th>
@@ -361,6 +361,27 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+<script>
+    // Check if the search query is 'senate'
+    var searchQuery = '<?= $senateQueryString ?>'; // Replace with your actual PHP variable
+
+    // Select the content div
+    var contentDiv = document.getElementById('senateTable');
+
+    // Check if the search query is not null and equals 'senate'
+    if (searchQuery) {
+        // Set the display style to block
+        contentDiv.style.display = 'block';
+    } else {
+        // Set the display style to none
+        contentDiv.style.display = 'none';
+    }
+</script>
+
+
+
 <script>
     $(document).ready(function () {
         // Listen for changes in the stateSenateSelector dropdown
@@ -464,4 +485,26 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
             });
         }
     });
+</script>
+
+<script>
+    function checkSelectedOption() {
+        // Get the select element
+        var stateSelector = document.getElementById('stateSelector');
+
+        // Get the selected option value
+        var selectedValue = stateSelector.options[stateSelector.selectedIndex].value;
+
+        // Get the repsTable element
+        var repsTable = document.getElementById('repsTable');
+
+        // Check if the selected value is not an empty string
+        if (selectedValue !== "") {
+            // Set the display style to block
+            repsTable.style.display = 'block';
+        } else {
+            // Set the display style to none
+            repsTable.style.display = 'none';
+        }
+    }
 </script>

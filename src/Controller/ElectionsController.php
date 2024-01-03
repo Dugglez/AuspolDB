@@ -50,6 +50,8 @@ class ElectionsController extends AppController
 
         $election = $this->Elections->get($id, $options);
 
+        $electionType = 'Reps';
+
 // Fetch Electorates with the necessary filtering
         $electorateIds = $this->fetchTable('ElectionsElectorates')
             ->find('list', [
@@ -58,7 +60,8 @@ class ElectionsController extends AppController
                 ],
                 'valueField' => 'electorate_id',
             ])->toArray();
-
+        $electorates = [];
+        if($electorateIds){
         $electorates = $this->fetchTable('Electorates')
             ->find('all', [
                 'conditions' => [
@@ -67,9 +70,16 @@ class ElectionsController extends AppController
                 ],
                 'order' => ['name' => 'ASC'], // Order by name in ascending order
             ]);
+            }
 
-// Add the filtered Electorates to the $election object
-        $election->electorates = $electorates;
+        if (count($electorates->toArray()) > 0 ) {
+            // If there are rows, set $electorates to the result
+            $election->electorates = $electorates;
+        } else {
+            // If no rows, set $electorates to an empty array
+            $electionType = 'Senate';
+        }
+
 
 
         $senateQueryString = $this->request->getQuery('senate');
@@ -91,7 +101,7 @@ class ElectionsController extends AppController
         $electorates = $this->fetchTable('Electorates');
         $parties = $this->fetchTable('Parties');
 
-        $this->set(compact('election', 'parties', 'candidates', 'electorates', 'searchQuery','upperHouseContests','electorateIds'));
+        $this->set(compact('election', 'parties', 'candidates', 'electorates', 'searchQuery','upperHouseContests','electorateIds','electionType','senateQueryString'));
     }
 
 

@@ -293,17 +293,13 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                     <div style="display: flex; align-items: center;">
                         <h4 style="margin-right: 100px; white-space: nowrap;"><?= __('Upper House') ?></h4>
 
-                        <select id="stateSenateSelector" style="margin-right: -250px;max-width: 255px;">
+                        <select id="stateSenateSelector" style="margin-right: -250px; max-width: 255px;">
                             <option value="">Please select</option>
-                            <option value="ACT">Australian Capital Territory</option>
-                            <option value="NSW">New South Wales</option>
-                            <option value="NT">Northern Territory</option>
-                            <option value="QLD">Queensland</option>
-                            <option value="SA">South Australia</option>
-                            <option value="TAS">Tasmania</option>
-                            <option value="VIC">Victoria</option>
-                            <option value="WA">Western Australia</option>
+                            <?php foreach ($jurisdictions as $jurisdiction):?>
+                                <option value="<?= $jurisdiction->state ?>"><?= h($jurisdiction->state) ?></option>
+                            <?php endforeach; ?>
                         </select>
+
 
                     </div>
 

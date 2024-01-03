@@ -101,6 +101,19 @@ class ElectionsController extends AppController
             'limit' => ($senateQueryString === null) ? 200 : null,
         ])->toArray();
 
+        $candidatesElectionsStatesTable = $this->fetchTable('CandidatesElectionsStates');
+
+        // Get unique jurisdictions for the given election_id
+        $query = $candidatesElectionsStatesTable->find()
+            ->select(['state'])
+            ->distinct(['state'])
+            ->where(['election_id' => $id]);
+
+        // Execute the query and convert the result to an array
+        $jurisdictions = $query->toArray();
+
+        // Pass the $jurisdictions to the view
+        $this->set('jurisdictions', $jurisdictions);
 
 
 

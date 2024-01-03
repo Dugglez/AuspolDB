@@ -5,6 +5,27 @@
  */
 
 ?>
+<style>
+    .btn-custom {
+        display: inline-block;
+        padding: 6px 20px; /* Adjusted padding */
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        background-color: #4CAF50; /* Green color, you can change this */
+        color: white;
+        border: 1px solid #4CAF50;
+        border-radius: 5px;
+        cursor: pointer;
+        line-height: 24px; /* Adjusted line-height */
+        margin-bottom: 20px; /* Added margin to the bottom */
+    }
+
+    .btn-custom:hover {
+        background-color: #45a049; /* Darker green color, you can change this */
+    }
+</style>
 <div class="row">
 
     <div class="column-responsive column-80">
@@ -75,12 +96,21 @@
                         <select id="electionDropdown" style="margin-left: 10px;">
                             <option>Select Election</option>
                             <?php foreach ($uniqueElections as $electionLabel => $uniqueElectionId) : ?>
-                                <option value="<?= h($uniqueElectionId) ?>"><?= h($electionLabel) ?></option>
+                                <?php
+                                // Check if 'senate' query string is set and matches the current election ID
+                                $selected = (isset($_GET['election']) && $_GET['election'] == $uniqueElectionId) ? 'selected' : '';
+                                ?>
+                                <option value="<?= h($uniqueElectionId) ?>" <?= $selected ?>><?= h($electionLabel) ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
-                <div class="table-responsive">
-                    <table id="resultsTable">
+
+                <button class="btn-custom" id="showTableBtn">Show Table</button>
+                <div class="table-responsive" style="display: none" >
+
+                    <div class="collapsible-box">
+
+                    <table id="resultsTable" id="resultsTableContainer">
                         <tr>
                             <th><?= __('Candidate') ?></th>
                             <th><?= __('Election') ?></th>
@@ -134,7 +164,7 @@
                     </table>
                 </div>
                 <?php endif; ?>
-
+                </div>
 
 <br>
                 <?php if (!empty($upperHouseContests)) : ?>
@@ -157,8 +187,10 @@
                         </select>
 
                     </div>
-                    <div class="table-responsive">
-                        <table id="resultsTable">
+
+                    <button class="btn-custom" id="showTableBtn2">Show Table</button>
+                    <div class="table-responsive" style="display: none;">
+                        <table class="content" id="resultsTable">
                             <tr>
                                 <th><?= __('Candidate') ?></th>
                                 <th><?= __('Election') ?></th>
@@ -199,7 +231,9 @@
                             <?php endforeach; ?>
                         </table>
                     </div>
-                <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+
             </div>
 
             </div>
@@ -256,6 +290,37 @@
                 // Redirect to the new URL
                 window.location.href = newUrl;
             }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        // Check if $selectedElectionId is set, and show the first table if true
+        <?php if (isset($selectedElectionId)): ?>
+        $(".table-responsive:first").show();
+        // Scroll down 300 pixels
+        $('html, body').animate({
+            scrollTop: $(".table-responsive:first").offset().top - 200
+        }, 1000); // Adjust the duration as needed
+        <?php endif; ?>
+
+        // Check if $senateQuery is set, and show the second table if true
+        <?php if (isset($senateQuery)): ?>
+        $(".table-responsive:last").show();
+        // Scroll down 500 pixels
+        $('html, body').animate({
+            scrollTop: $(".table-responsive:last").offset().top - 200
+        }, 1000); // Adjust the duration as needed
+        <?php endif; ?>
+
+        // Toggle visibility for the first table
+        $("#showTableBtn").on("click", function () {
+            $(".table-responsive:first").toggle();
+        });
+
+        // Toggle visibility for the second table
+        $("#showTableBtn2").on("click", function () {
+            $(".table-responsive:last").toggle();
         });
     });
 </script>

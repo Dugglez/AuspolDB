@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use DateTime;
+
 /**
  * Parties Controller
  *
@@ -56,9 +58,12 @@ class PartiesController extends AppController
         );
 
         $query = $this->fetchTable('CandidatesElectionsStates')->find()
-            ->select(['election_id'])
-            ->distinct(['election_id'])
-            ->where(['party_id' => $id]);
+            ->select(['CandidatesElectionsStates.election_id'])
+            ->distinct(['CandidatesElectionsStates.election_id'])
+            ->where(['CandidatesElectionsStates.party_id' => $id])
+            ->contain(['Elections']) // Assuming there's a relationship between CandidatesElectionsStates and Elections
+            ->orderDesc('Elections.date'); // Adjust 'Elections.date' based on your actual table structure
+
 
 
         $uniqueSenateElectionIds = array_unique(
@@ -77,6 +82,7 @@ class PartiesController extends AppController
                         'CandidatesElectionsStates.party_id' => $id,
                         'CandidatesElectionsStates.election_id' => $senateQuery,
                     ],
+
                 ])
                 ->toArray();
         } else {
@@ -137,7 +143,9 @@ class PartiesController extends AppController
             $uniqueSenateElections[$electionLabel] = $uniqueElectionId;
         }
 
-        $this->set(compact('party', 'candidates', 'electorates', 'elections', 'uniqueElections', 'upperHouseContests','uniqueSenateElections'));
+
+
+        $this->set(compact('party', 'candidates', 'electorates', 'elections', 'uniqueElections', 'upperHouseContests','uniqueSenateElections', 'senateQuery', 'selectedElectionId'));
     }
 
 

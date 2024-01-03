@@ -55,13 +55,44 @@ class PartiesController extends AppController
             array_column($party['candidates_elections_electorates'], 'election_id')
         );
 
-        $upperHouseContests = $this->fetchTable('CandidatesElectionsStates')->find('all', [
-            'conditions' => ['CandidatesElectionsStates.party_id' => $id],
-        ])->toArray();
+        $query = $this->fetchTable('CandidatesElectionsStates')->find()
+            ->select(['election_id'])
+            ->distinct(['election_id'])
+            ->where(['party_id' => $id]);
+
+
+        $uniqueSenateElectionIds = array_unique(
+            $query->extract('election_id')->toArray()
+        );
+
+
+        // Check if the 'senate' query string is set
+        $senateQuery = $this->request->getQuery('senate');
+
+        if ($senateQuery !== null) {
+            // Load all entries with party_id = $id and election id = the query string value
+            $upperHouseContests = $this->fetchTable('CandidatesElectionsStates')
+                ->find('all', [
+                    'conditions' => [
+                        'CandidatesElectionsStates.party_id' => $id,
+                        'CandidatesElectionsStates.election_id' => $senateQuery,
+                    ],
+                ])
+                ->toArray();
+        } else {
+            // Load entries with party_id = $id and limit to 200
+            $upperHouseContests = $this->fetchTable('CandidatesElectionsStates')
+                ->find('all', [
+                    'conditions' => ['CandidatesElectionsStates.party_id' => $id],
+                    'limit' => 200,
+                ])
+                ->toArray();
+        }
 
 
         // Initialize the associative array for unique elections
         $uniqueElections = [];
+        $uniqueSenateElections = [];
 
         // Check if the election query parameter is set
         $selectedElectionId = $this->request->getQuery('election');
@@ -93,7 +124,20 @@ class PartiesController extends AppController
             $uniqueElections[$electionLabel] = $uniqueElectionId;
         }
 
-        $this->set(compact('party', 'candidates', 'electorates', 'elections', 'uniqueElections', 'upperHouseContests'));
+        foreach ($uniqueSenateElectionIds as $uniqueElectionId) {
+            // Find the corresponding election
+            $election = $elections->get($uniqueElectionId);
+
+            // Concatenate jurisdiction with date (formatted as year)
+            $electionDate = $election->date;
+            $electionYear = $electionDate->format('Y');
+            $electionLabel = $electionYear . ' ' . $election->jurisdiction;
+
+            // Store in associative array
+            $uniqueSenateElections[$electionLabel] = $uniqueElectionId;
+        }
+
+        $this->set(compact('party', 'candidates', 'electorates', 'elections', 'uniqueElections', 'upperHouseContests','uniqueSenateElections'));
     }
 
 

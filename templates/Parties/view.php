@@ -136,9 +136,27 @@
                 <?php endif; ?>
 
 
-
+<br>
                 <?php if (!empty($upperHouseContests)) : ?>
                     <h4><?= __('Upper House Results') ?></h4>
+
+
+
+
+                    <div style="display: flex; align-items: center;">
+                        <h5><?= __('Select Election: ') ?></h5>
+                        <select id="senateElectionDropdown" style="margin-left: 10px;">
+                            <option>Select Election</option>
+                            <?php foreach ($uniqueSenateElections as $electionLabel => $uniqueElectionId) : ?>
+                                <?php
+                                // Check if 'senate' query string is set and matches the current election ID
+                                $selected = (isset($_GET['senate']) && $_GET['senate'] == $uniqueElectionId) ? 'selected' : '';
+                                ?>
+                                <option value="<?= h($uniqueElectionId) ?>" <?= $selected ?>><?= h($electionLabel) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+                    </div>
                     <div class="table-responsive">
                         <table id="resultsTable">
                             <tr>
@@ -212,4 +230,33 @@
     });
 </script>
 
+
+<script>
+    $(document).ready(function () {
+        $('#senateElectionDropdown').on('change', function () {
+            var selectedValue = $(this).val();
+
+            // Ensure that a valid option is selected
+            if (selectedValue !== 'Select Election') {
+                // Get the current URL and create a URLSearchParams object
+                var urlParams = new URLSearchParams(window.location.search);
+
+                // Set or append the 'senate' query parameter
+                urlParams.set('senate', selectedValue);
+
+                // Construct the new URL with the updated query parameters
+                var newUrl = window.location.origin + window.location.pathname + '?' + urlParams.toString();
+
+                // Redirect to the new URL
+                window.location.href = newUrl;
+            }
+            else {
+                var newUrl = window.location.origin + window.location.pathname;
+
+                // Redirect to the new URL
+                window.location.href = newUrl;
+            }
+        });
+    });
+</script>
 

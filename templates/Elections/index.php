@@ -3,6 +3,9 @@
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\Election> $elections
  */
+
+use Cake\Chronos\Chronos;
+
 ?>
 <style>
     .btn-custom {
@@ -62,7 +65,9 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($elections as $election): ?>
+                <?php
+
+                foreach ($elections as $election): ?>
                 <tr>
 
                     <td><?= $this->Html->link(

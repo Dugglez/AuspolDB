@@ -43,7 +43,19 @@
     </div>
 </div>
 <div class="row">
-
+    <?php
+    $stateMappings = [
+        'Federal' => 'Federal',
+        'NSW' => 'New South Wales',
+        'VIC' => 'Victoria',
+        'QLD' => 'Queensland',
+        'SA' => 'South Australia',
+        'WA' => 'Western Australia',
+        'TAS' => 'Tasmania',
+        'ACT' => 'Australian Capital Territory',
+        'NT' => 'Northern Territory',
+    ];
+    ?>
     <div class="column-responsive column-80">
         <div class="electorates view content">
             <h3><?= h($electorate->name) ?></h3>
@@ -86,74 +98,7 @@
                 </blockquote>
             </div>
             <div class="related">
-                <h4><?= __('Contested in') ?></h4>
-                <?php if (!empty($electorate->elections)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Election') ?></th>
 
-
-
-                            <th><?= __('Outgoing Government Party') ?></th>
-                            <th><?= __('Incoming Government Party') ?></th>
-
-                        </tr>
-                        <?php
-                        // Custom sorting function based on election date
-                        usort($electorate->elections, function($a, $b) {
-                            return $this->Time->format($b->date, 'Y') - $this->Time->format($a->date, 'Y');
-                        });
-
-                        foreach ($electorate->elections as $elections) :
-                            ?>
-                            <tr>
-                                <?php
-                                $stateMappings = [
-                                    'Federal' => 'Federal',
-                                    'NSW' => 'New South Wales',
-                                    'VIC' => 'Victoria',
-                                    'QLD' => 'Queensland',
-                                    'SA' => 'South Australia',
-                                    'WA' => 'Western Australia',
-                                    'TAS' => 'Tasmania',
-                                    'ACT' => 'Australian Capital Territory',
-                                    'NT' => 'Northern Territory',
-                                ];
-                                ?>
-
-
-                                <td>
-                                    <?= $this->Html->link(
-                                        $this->Time->format($elections->date, 'Y') . ' ' . $stateMappings[$elections->jurisdiction],
-                                        ['controller' => 'Elections', 'action' => 'view', $elections->id]
-                                    ) ?>
-                                </td>
-
-                                <td>
-                                    <?php
-                                    $outgoingParty = isset($elections->outgoing_government_party) ? $parties->get($elections->outgoing_government_party) : null;
-
-                                    if (isset($outgoingParty->name, $outgoingParty->id)) {
-                                        echo $this->Html->link(h($outgoingParty->name), ['controller' => 'Parties', 'action' => 'view', $outgoingParty->id]);
-                                    } else {
-                                        echo 'None'; // or any other default value or message
-                                    }
-                                    ?>
-                                </td>
-
-                                <td>
-                                    <?php
-                                    $incomingParty = $parties->get($elections->incoming_government_party);
-                                    echo $this->Html->link(h($incomingParty->name), ['controller' => 'Parties', 'action' => 'view', $incomingParty->id]);
-                                    ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-
-                    </table>
-                </div>
-                <?php endif; ?>
             </div>
             <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -187,8 +132,9 @@
 
                         // Scroll to the bottom of the screen
                         $('html, body').animate({
-                            scrollTop: $(document).height() - $(window).height()
+                            scrollTop: 500
                         }, 'fast');
+
                     });
                 });
             </script>
@@ -449,6 +395,63 @@
                             <?php endforeach; ?>
                         </table>
                 </div>
+                <?php endif; ?>
+<br>
+                <h4><?= __('Contested in') ?></h4>
+                <?php if (!empty($electorate->elections)) : ?>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <th><?= __('Election') ?></th>
+
+
+
+                                <th><?= __('Outgoing Government Party') ?></th>
+                                <th><?= __('Incoming Government Party') ?></th>
+
+                            </tr>
+                            <?php
+                            // Custom sorting function based on election date
+                            usort($electorate->elections, function($a, $b) {
+                                return $this->Time->format($b->date, 'Y') - $this->Time->format($a->date, 'Y');
+                            });
+
+                            foreach ($electorate->elections as $elections) :
+                                ?>
+                                <tr>
+
+
+
+                                    <td>
+                                        <?= $this->Html->link(
+                                            $this->Time->format($elections->date, 'Y') . ' ' . $stateMappings[$elections->jurisdiction],
+                                            ['controller' => 'Elections', 'action' => 'view', $elections->id]
+                                        ) ?>
+                                    </td>
+
+                                    <td>
+                                        <?php
+                                        $outgoingParty = isset($elections->outgoing_government_party) ? $parties->get($elections->outgoing_government_party) : null;
+
+                                        if (isset($outgoingParty->name, $outgoingParty->id)) {
+                                            echo $this->Html->link(h($outgoingParty->name), ['controller' => 'Parties', 'action' => 'view', $outgoingParty->id]);
+                                        } else {
+                                            echo 'None'; // or any other default value or message
+                                        }
+                                        ?>
+                                    </td>
+
+                                    <td>
+                                        <?php
+                                        $incomingParty = $parties->get($elections->incoming_government_party);
+                                        echo $this->Html->link(h($incomingParty->name), ['controller' => 'Parties', 'action' => 'view', $incomingParty->id]);
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+
+                        </table>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>

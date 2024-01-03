@@ -25,7 +25,14 @@ class ElectionsController extends AppController
             $conditions['jurisdiction'] = $jurisdiction;
         }
 
-        $elections = $this->paginate($this->Elections->find('all', ['conditions' => $conditions]), ['limit' => 200]);
+        $elections = $this->paginate(
+            $this->Elections->find('all', [
+                'conditions' => $conditions,
+                'order' => ['date' => 'DESC'], // Order by date in descending order
+            ]),
+            ['limit' => 200]
+        );
+
 
         $parties = $this->fetchTable('Parties');
 
@@ -60,7 +67,7 @@ class ElectionsController extends AppController
                 ],
                 'valueField' => 'electorate_id',
             ])->toArray();
-        $electorates = [];
+        $electorates = null;
         if($electorateIds){
         $electorates = $this->fetchTable('Electorates')
             ->find('all', [
@@ -72,7 +79,7 @@ class ElectionsController extends AppController
             ]);
             }
 
-        if (count($electorates->toArray()) > 0 ) {
+        if (isset($electorates) and count($electorates->toArray()) > 0 ) {
             // If there are rows, set $electorates to the result
             $election->electorates = $electorates;
         } else {

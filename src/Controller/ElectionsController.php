@@ -92,8 +92,19 @@ class ElectionsController extends AppController
         $senateQueryString = $this->request->getQuery('senate');
 
         $queryConditions = ['CandidatesElectionsStates.election_id' => $id];
+        $composition = '';
         if ($senateQueryString !== null) {
             $queryConditions['CandidatesElectionsStates.state'] = $senateQueryString;
+            $electionsStatesTable = $this->fetchTable('ElectionsStates');
+
+            $query = $electionsStatesTable->find()
+                ->select(['composition'])
+                ->where([
+                    'election_id' => $id,
+                    'state' => $senateQueryString
+                ]);
+
+            $composition = $query->first()->composition;
         }
 
         $upperHouseContests = $this->fetchTable('CandidatesElectionsStates')->find('all', [
@@ -121,7 +132,8 @@ class ElectionsController extends AppController
         $electorates = $this->fetchTable('Electorates');
         $parties = $this->fetchTable('Parties');
 
-        $this->set(compact('election', 'parties', 'candidates', 'electorates', 'searchQuery','upperHouseContests','electorateIds','electionType','senateQueryString'));
+        $this->set(compact('election', 'parties', 'candidates', 'electorates', 'searchQuery',
+            'upperHouseContests','electorateIds','electionType','senateQueryString','composition'));
     }
 
 

@@ -293,12 +293,43 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                     <div style="display: flex; align-items: center;">
                         <h4 style="margin-right: 100px; white-space: nowrap;"><?= __('Upper House') ?></h4>
 
-                        <select id="stateSenateSelector" style="margin-right: -250px; max-width: 255px;">
+                        <select id="stateSenateSelector" style="max-width: 255px;">
                             <option value="">Please select</option>
-                            <?php foreach ($jurisdictions as $jurisdiction):?>
-                                <option value="<?= $jurisdiction->state ?>"><?= h($jurisdiction->state) ?></option>
+                            <?php foreach ($jurisdictions as $jurisdiction): ?>
+                                <option value="<?= $jurisdiction->state ?>" <?= ($senateQueryString !== null && $jurisdiction->state === $senateQueryString) ? 'selected' : '' ?>>
+                                    <?= h($jurisdiction->state) ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
+
+                        <?php if ($composition != ''): ?>
+                            <div style="margin-left: 20px; white-space: pre;">
+                                <p><?php
+                                    // Split the string into an array using space as the delimiter
+                                    $compositionArray = explode(' ', $composition);
+
+                                    // Iterate over the array and format the output
+                                    $output = '';
+                                    foreach ($compositionArray as $key => $value) {
+                                        // Add a newline after every number except the first one
+                                        if ($key > 0 && is_numeric($value)) {
+                                            $output .= "\n";
+                                        }
+
+                                        // Concatenate the current value to the output
+                                        $output .= $value . ' ';
+                                    }
+
+                                    // Remove trailing space
+                                    $output = rtrim($output);
+
+                                    // Display the formatted output
+                                    echo $output;
+                                    ?>
+                                </p>
+                            </div>
+                        <?php endif; ?>
+
 
 
                     </div>

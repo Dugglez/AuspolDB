@@ -30,9 +30,13 @@ class CandidatesController extends AppController
             $query->where(['name LIKE' => '%' . $searchString . '%']);
         }
 
+
+        $query->where(['NOT' => ['name LIKE' => '-------------------------------------------------------------------']]);
+
         $query->order(['SUBSTRING_INDEX(name, " ", -1)' => 'ASC']);
 
         $candidates = $this->paginate($query, ['limit' => 200]);
+
 
 
 

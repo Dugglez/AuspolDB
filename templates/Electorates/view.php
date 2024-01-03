@@ -99,6 +99,67 @@
             </div>
             <div class="related">
 
+                <table>
+                    <tr>
+                        <th>Member</th>
+                        <th>To</th> <!-- Swapped "From Year" and "To Year" columns -->
+                        <th>From</th>
+                    </tr>
+
+                    <?php
+                    $prevWinnerId = null;
+                    $streakStartYear = null;
+
+                    foreach ($winners as $electionId => $winnerId) {
+                        $election = $electionslist->get($electionId);
+                        $electionDate = $election->date;
+                        $electionYear = $electionDate->format('Y');
+                        $electionLabel = h($electionYear);
+
+                        // Get candidate name based on winnerId
+                        $candidate = $candidates->get($winnerId);
+                        $candidateName = h($candidate->name);
+                        if (isset($prevWinnerId)) {
+                            $prevCandName = h($candidates->get($prevWinnerId)->name);
+                        }
+                        if ($winnerId !== $prevWinnerId or !isset($prevWinnerId)) {
+                            // Output the row for the streak
+                            if ($streakStartYear !== null) {
+                                echo "<tr>
+                        <td>{$this->Html->link($prevCandName, ['controller' => 'Candidates', 'action' => 'view', $prevWinnerId])}</td>
+                        <td>{$this->Html->link($electionLabel, ['controller' => 'Elections', 'action' => 'view', $election->id])}</td>
+                        <td>{$this->Html->link($streakStartYear, ['controller' => 'Elections', 'action' => 'view', $streakStartElectionId])}</td>
+                      </tr>";
+                            }
+
+                            // Start a new streak
+                            $streakStartYear = $electionYear;
+                            $streakStartElectionId = $electionId;
+                        }
+
+                        // Update the previous winner ID
+                        $prevWinnerId = $winnerId;
+                    }
+
+                    // Output the last row if there is an ongoing streak
+                    if ($streakStartYear !== null) {
+                        echo "<tr>
+                <td>{$this->Html->link($candidateName, ['controller' => 'Candidates', 'action' => 'view', $winnerId])}</td>
+                <td>{$this->Html->link($electionLabel, ['controller' => 'Elections', 'action' => 'view', $election->id])}</td>
+                <td>{$this->Html->link($streakStartYear, ['controller' => 'Elections', 'action' => 'view', $streakStartElectionId])}</td>
+              </tr>";
+                    }
+                    ?>
+
+                </table>
+
+
+
+
+
+
+
+
             </div>
             <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 

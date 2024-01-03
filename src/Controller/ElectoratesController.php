@@ -57,8 +57,15 @@ class ElectoratesController extends AppController
         $electionslist = $this->fetchTable('Elections');
         $parties = $this->fetchTable('Parties');
 
+        // Initialize the $winners array
+        $winners = [];
 
-        $this->set(compact('electorate','candidates','electionslist','parties','elections_electorates'));
+        // Populate $winners with election IDs as keys and winner IDs as values
+        foreach ($elections_electorates as $election_electorate) {
+            $winners[$election_electorate->election_id] = $election_electorate->winning_candidate;
+        }
+
+        $this->set(compact('electorate','candidates','electionslist','parties','elections_electorates','winners'));
     }
 
     /**

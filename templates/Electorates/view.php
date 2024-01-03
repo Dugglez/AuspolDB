@@ -102,8 +102,8 @@
                 <table>
                     <tr>
                         <th>Member</th>
-                        <th>To</th> <!-- Swapped "From Year" and "To Year" columns -->
-                        <th>From</th>
+                        <th>From</th> <!-- Swapped "From Year" and "To Year" columns -->
+                        <th>To</th>
                     </tr>
 
                     <?php

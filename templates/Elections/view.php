@@ -401,12 +401,33 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                 var separator = currentUrl.includes('?') ? '&' : '?';
                 var updatedUrl = currentUrl + separator + 'senate=' + selectedValue;
                 window.location.href = updatedUrl;
+
+
             } else {
                 // If 'senate' query parameter exists, replace its value
                 var updatedUrl = currentUrl.replace(results[0], '?senate=' + selectedValue);
                 window.location.href = updatedUrl;
+
             }
         });
+    });
+</script>
+
+<script>
+
+
+    // If the $senateQueryString is set, scroll down by 500 pixels
+    $(document).ready(function () {
+        // Check if $selectedElectionId is set, and show the first table if true
+
+        // Check if $senateQuery is set, and show the second table if true
+        <?php if (isset($senateQueryString)): ?>
+        $(".table-responsive:last").show();
+        // Scroll down 500 pixels
+        $('html, body').animate({
+            scrollTop: $(".table-responsive:last").offset().top - 200
+        }, 1000); // Adjust the duration as needed
+        <?php endif; ?>
     });
 </script>
 
@@ -457,6 +478,7 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
             // Show only electorates that match the selected state
             if (selectedState !== '') {
                 $('.collapsible-box .content table tr[data-state="' + selectedState + '"]').show();
+
             } else {
                 // Show all electorates if no state is selected
                 $('.collapsible-box .content table tr').show();

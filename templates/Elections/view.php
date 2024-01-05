@@ -129,6 +129,19 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                     <td><?= h($election->date->format('d/m/Y')) ?></td>
 
                 </tr>
+                <tr>
+                    <th><?= __('House Composition') ?></th>
+                    <?php
+                    arsort($houseComposition); // Sort the array by counts in descending order
+                    ?>
+
+                    <td>
+                        <?php foreach ($houseComposition as $partyId => $count): ?>
+                            <?php echo $count . ' ' . $parties->get($partyId)->name; ?><br>
+                        <?php endforeach; ?>
+                    </td>
+
+                </tr>
                 <div class="related">
             </table><?php if (!empty($election->candidates_parties_elections)) : ?>
 

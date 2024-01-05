@@ -126,6 +126,24 @@ class ElectionsController extends AppController
         // Pass the $jurisdictions to the view
         $this->set('jurisdictions', $jurisdictions);
 
+        $partyCounts = $this->fetchTable('ElectionsElectorates')
+            ->find()
+            ->select(['winning_party'])
+            ->where(['election_id' => $id])
+            ->toArray();
+
+        $houseComposition = [];
+
+        foreach ($partyCounts as $result) {
+            $winningParty = $result->winning_party;
+
+            // Check if the party ID already exists in the result array
+            if (isset($houseComposition[$winningParty])) {
+                $houseComposition[$winningParty]++;
+            } else {
+                $houseComposition[$winningParty] = 1;
+            }
+        }
 
 
         $candidates = $this->fetchTable('Candidates');
@@ -133,7 +151,7 @@ class ElectionsController extends AppController
         $parties = $this->fetchTable('Parties');
 
         $this->set(compact('election', 'parties', 'candidates', 'electorates', 'searchQuery',
-            'upperHouseContests','electorateIds','electionType','senateQueryString','composition'));
+            'upperHouseContests','electorateIds','electionType','senateQueryString','composition', 'houseComposition'));
     }
 
 

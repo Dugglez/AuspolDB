@@ -236,9 +236,14 @@
                         $electionDate = $election->date;
                         $electionYear = $electionDate->format('Y');
                         $electionLabel = $electionYear . ' ' . $stateMappings[$election->jurisdiction];
+
                         // Store in associative array
                         $uniqueElections[$uniqueElectionId] = $electionLabel;
                     }
+
+                    // Sort the array by values (election labels)
+                    arsort($uniqueElections);
+
                     ?>
 
                     <!-- Display a dropdown for each unique election ID next to the table heading -->

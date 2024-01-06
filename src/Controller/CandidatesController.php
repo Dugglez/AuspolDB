@@ -38,10 +38,9 @@ class CandidatesController extends AppController
         $candidates = $this->paginate($query, ['limit' => 200]);
 
 
+        $candidatesCount = $this->Candidates->find('all')->count();
 
-
-
-        $this->set(compact('candidates'));
+        $this->set(compact('candidates', 'candidatesCount'));
     }
 
     /**

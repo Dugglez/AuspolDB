@@ -28,7 +28,9 @@
 <div class="candidates index content">
     <div style="display: flex; align-items: center;">
         <h3><?= __('Candidates') ?></h3>
-        <input type="text" id="candidateSearch" placeholder="Search candidates..." style="max-width: 375px; margin-left: 400px;">
+        <a id="randomCandidateButton" href="#" style="white-space: nowrap; margin-left:20px" class="btn btn-custom">View Random Candidate</a>
+
+        <input type="text" id="candidateSearch" placeholder="Search candidates..." style="max-width: 375px; margin-left: 300px;">
         <?= $this->Html->link('Search', '#', ['id' => 'searchButton', 'class' => 'btn-custom', 'style' => 'margin-left: 10px; margin-bottom: 15px']) ?>
     </div>
     <div class="table-responsive">
@@ -100,5 +102,19 @@
         $('#searchButton').on('click', function() {
             performCandidateSearch();
         });
+    });
+</script>
+
+<script>
+    document.getElementById('randomCandidateButton').addEventListener('click', function() {
+        // Assuming $candidatesCount is the count of candidates in the Candidates table
+        var candidatesCount = <?php echo $candidatesCount; ?>;
+
+        // Generate a random candidate ID
+        var randomCandidateId = Math.floor(Math.random() * candidatesCount) + 1;
+
+        // Build the URL and navigate to it
+        var randomCandidateUrl = '<?php echo $this->Url->build(['controller' => 'Candidates', 'action' => 'view']); ?>' + '/' + randomCandidateId;
+        window.location.href = randomCandidateUrl;
     });
 </script>

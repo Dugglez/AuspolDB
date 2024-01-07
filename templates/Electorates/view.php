@@ -80,7 +80,7 @@
                 </tr>
 
                 <tr>
-                    <th><?= __('Population') ?></th>
+                    <th><?= __('Enrolment at last contest') ?></th>
                     <td><?= $electorate->population === null ? __('Unknown') : $this->Number->format($electorate->population) ?></td>
                 </tr>
                 <tr>
@@ -91,7 +91,7 @@
             </table>
 
             <div class="text">
-                <strong><?= __('Namesake') ?></strong>
+                <strong><?= __('Description') ?></strong>
                 <blockquote>
                     <?= $electorate->namesake === null ? __('Unknown.') : $this->Text->autoParagraph(h($electorate->namesake)); ?>
 

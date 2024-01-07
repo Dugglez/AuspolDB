@@ -66,11 +66,28 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
             <table>
                 <tr>
                     <th><?= __('Electoral System') ?></th>
-                    <td><?= h($election->electoral_system) ?></td>
+                    <td class="election-system" data-system="<?= h($election->electoral_system) ?>">
+                        <?= h($election->electoral_system) ?>
+                        <div class="info-box" style="display: none;"></div>
+                    </td>
+
+                    <style>
+                        .info-box {
+                            position: absolute;
+                            background-color: #fff;
+                            border: 1px solid #ccc;
+                            padding: 10px;
+                            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+                            z-index: 1;
+                        }
+                    </style>
                 </tr>
                 <tr>
                     <th><?= __('Government Type') ?></th>
-                    <td><?= h($election->parliamentary_status) ?></td>
+                    <td class="parliamentary-status" data-status="<?= h($election->parliamentary_status) ?>">
+                        <?= h($election->parliamentary_status) ?>
+                        <div class="info-box" style="display: none;"></div>
+                    </td>
                 </tr>
 
                 <tr>
@@ -112,8 +129,11 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                     <td><?= $election->nongovernment_seats === null ? '' : $this->Number->format($election->nongovernment_seats) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Majority') ?></th>
-                    <td>
+                    <th class="majority-header">
+                        <?= __('Majority') ?>
+                        <div class="info-box" style="display: none;">The difference between the number of Government seats and non-government seats.</div>
+                    </th>
+                    <td class="majority-cell">
                         <?php
                         if ($election->government_seats !== null && $election->nongovernment_seats !== null) {
                             $majority = $election->government_seats - $election->nongovernment_seats;
@@ -569,4 +589,130 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
             repsTable.style.display = 'none';
         }
     }
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var electionSystemTd = document.querySelector('.election-system');
+        var infoBox = electionSystemTd.querySelector('.info-box');
+
+        electionSystemTd.addEventListener('mouseover', function() {
+            var system = electionSystemTd.dataset.system;
+
+            // Set information based on the electoral system value
+            var infoText;
+            switch (system) {
+                case 'FPTP':
+                    infoText = 'First-Past-the-Post (FPTP): The candidate with the most votes is elected.';
+                    break;
+                case 'Block Voting':
+                    infoText = 'Block Voting: Voters are given a certain number of votes. The candidates\n' +
+                        'with the most votes are elected. The number of vacancies is usually equal to\n' +
+                        'the number of votes the voter has.';
+                    break;
+                case 'STV':
+                    infoText = 'Single Transferable Vote (STV): ' +
+                        'A voter has one vote which they may nominate preferences for.\n' +
+                        'Candidates who reach a required amount of votes (the quota) are elected.';
+                    break;
+                case 'Hare-Clark':
+                    infoText = 'Hare-Clark: ' +
+                        'A voter has one vote which they may nominate preferences for.\n' +
+                        'Candidates who reach a required amount of votes (the quota) are elected.';
+                    break;
+                case 'Modified d\'Hondt Electoral System':
+                    infoText = 'Modified d\'Hondt Electoral System: ' +
+                        'A voter may issue preferences above and below the line on their ballot.\n' +
+                        'Candidates who reach a quota of votes (and receive a minimum amount of\n' +
+                        'first preferences) are elected.';
+                    break;
+                case 'Other':
+                    infoText = 'Other';
+                    break;
+                case 'OPV':
+                    infoText = 'Optional Preferential Voting (OPV): ' +
+                        'A voter has one vote, and may nominate preferences if they choose.\n' +
+                        'Voters who do not nominate preferences may have their vote exhaust and fail to contribute\n' +
+                        'to the election of a candidate. The candidate who receives the most votes\n' +
+                        'after the distribution of preferences is elected.';
+                    break;
+                case 'FPV':
+                    infoText = 'Full Preferential Voting (FPV): ' +
+                        'A voter has one vote, and must nominate preferences for each candidate on the ballot.\n' +
+                    'Voters who do not nominate preferences will have cast an informal vote.\n' +
+                        'The candidate who receives the most votes after the distribution of preferences is elected.';
+                    break;
+
+                default:
+                    infoText = 'Default information for unknown system';
+            }
+
+            // Display the information box
+            infoBox.textContent = infoText;
+            infoBox.style.display = 'block';
+        });
+
+        electionSystemTd.addEventListener('mouseout', function() {
+            // Hide the information box when hover stops
+            infoBox.style.display = 'none';
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var parliamentaryStatusTd = document.querySelector('.parliamentary-status');
+        var infoBox = parliamentaryStatusTd.querySelector('.info-box');
+
+        parliamentaryStatusTd.addEventListener('mouseover', function() {
+            var status = parliamentaryStatusTd.dataset.status;
+
+            // Set information based on the parliamentary status value
+            var infoText;
+            switch (status) {
+                case 'Majority':
+                    infoText = 'Majority: A party (or formalised coalition of parties) is able to control a majority of ' +
+                        'votes on the floor of the House.';
+                    break;
+                case 'Minority':
+                    infoText = 'Minority: A governing party (or formalised coalition of parties) must rely on the support ' +
+                        'of crossbench members to control the majority of votes on the floor of the House.';
+                    break;
+                case null:
+                    infoText = 'No parliamentary status information';
+                    break;
+
+                default:
+                    infoText = 'Default information for unknown status';
+            }
+
+            // Display the information box
+            infoBox.textContent = infoText;
+            infoBox.style.display = 'block';
+        });
+
+        parliamentaryStatusTd.addEventListener('mouseout', function() {
+            // Hide the information box when hover stops
+            infoBox.style.display = 'none';
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var majorityCell = document.querySelector('.majority-cell');
+        var infoBox = majorityCell.previousElementSibling.querySelector('.info-box');
+
+        majorityCell.addEventListener('mouseover', function() {
+            // Display the information box when hovering over the cell
+            infoBox.style.display = 'block';
+        });
+
+        majorityCell.addEventListener('mouseout', function() {
+            // Hide the information box when hover stops
+            infoBox.style.display = 'none';
+        });
+    });
 </script>

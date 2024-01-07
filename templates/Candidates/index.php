@@ -105,16 +105,25 @@
     });
 </script>
 
+<?php
+// Assuming $candidateIds is an array of candidate IDs
+$candidateIdsJSON = json_encode($candidateIds);
+?>
+
 <script>
     document.getElementById('randomCandidateButton').addEventListener('click', function() {
-        // Assuming $candidatesCount is the count of candidates in the Candidates table
-        <?php  $candidateIdsJSON = json_encode($candidatesCount); ?>
         var candidateIds = <?php echo $candidateIdsJSON; ?>;
 
-        // Generate a random candidate ID
-        var randomCandidateId = candidateIds[Math.floor(Math.random() * candidateIds.length)];
+        if (Array.isArray(candidateIds) && candidateIds.length > 0) {
+            // Generate a random candidate ID
+            var randomCandidateId = candidateIds[Math.floor(Math.random() * candidateIds.length)];
 
-        var randomCandidateUrl = '<?php echo $this->Url->build(['controller' => 'Candidates', 'action' => 'view']); ?>' + '/' + randomCandidateId;
-        window.location.href = randomCandidateUrl;
+            var randomCandidateUrl = '<?php echo $this->Url->build(['controller' => 'Candidates', 'action' => 'view']); ?>' + '/' + randomCandidateId;
+            window.location.href = randomCandidateUrl;
+        } else {
+            // Handle the case when candidateIds is not a valid array
+            console.error('Invalid candidateIds array');
+        }
     });
 </script>
+

@@ -108,12 +108,12 @@
 <script>
     document.getElementById('randomCandidateButton').addEventListener('click', function() {
         // Assuming $candidatesCount is the count of candidates in the Candidates table
-        var candidatesCount = <?php echo $candidatesCount; ?>;
+        <?php  $candidateIdsJSON = json_encode($candidatesCount); ?>
+        var candidateIds = <?php echo $candidateIdsJSON; ?>;
 
         // Generate a random candidate ID
-        var randomCandidateId = Math.floor(Math.random() * candidatesCount) + 1;
+        var randomCandidateId = candidateIds[Math.floor(Math.random() * candidateIds.length)];
 
-        // Build the URL and navigate to it
         var randomCandidateUrl = '<?php echo $this->Url->build(['controller' => 'Candidates', 'action' => 'view']); ?>' + '/' + randomCandidateId;
         window.location.href = randomCandidateUrl;
     });

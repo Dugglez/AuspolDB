@@ -277,8 +277,10 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
 
             <div class="related">
                 <?php if ($electionType != 'Senate') : ?>
+
                 <div style="display: flex; align-items: center;">
                     <h4 style="margin-right: 100px;white-space: nowrap;"><?= __('Lower House') ?></h4>
+                    <?php if ($election->jurisdiction == 'Federal') : ?>
                     <select id="stateSelector" style="margin-right: -250px; max-width: 255px;" onchange="checkSelectedOption()">
                         <option value="">All States/Territories</option>
                         <option value="ACT">Australian Capital Territory</option>
@@ -290,6 +292,7 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                         <option value="VIC">Victoria</option>
                         <option value="WA">Western Australia</option>
                     </select>
+                    <?php endif; ?>
                     <input type="text" id="electorateSearch" placeholder="Search electorates..." style="max-width:200px; margin-left: 280px;">
                     <button id="searchElectorateButton" class="btn-custom" style="margin-left: 10px; margin-bottom: 15px">Search</button>
                 </div>

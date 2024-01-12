@@ -237,7 +237,7 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                 return $b['winnerStatus'] === 'Incoming' ? 1 : -1;
             });
             ?>
-
+            <?php if ($election->jurisdiction == 'Federal') : ?>
             <div class="table-responsive" id="newMembersTableContainer" style="margin-top: 20px;">
                 <h4><?= __('Incoming/Outgoing Members') ?></h4>
                 <div class="collapsible-box" >
@@ -273,7 +273,7 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                 </div>
 
             </div>
-
+            <?php endif; ?>
 
             <div class="related">
                 <?php if ($electionType != 'Senate') : ?>

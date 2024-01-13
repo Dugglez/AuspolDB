@@ -65,6 +65,9 @@ class ElectoratesController extends AppController
             if ($election_electorate->winning_candidate !== null) {
                 $winners[$election_electorate->election_id] = $election_electorate->winning_candidate;
             }
+            else {
+                $winners[$election_electorate->election_id] = "Multiple Members, see results";
+            }
         }
 
 

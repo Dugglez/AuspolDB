@@ -99,110 +99,53 @@
             </div>
             <div class="related">
 
-                <table>
-                    <tr>
-                        <th>Member</th>
-                        <th>From</th> <!-- Swapped "From Year" and "To Year" columns -->
-                        <th>To</th>
-                    </tr>
+                <?php
+                $tableData = [];
 
-                    <?php
-                    $prevWinnerId = null;
-                    $streakStartYear = null;
+                foreach ($winners as $electionId => $winnerId) {
+                    $election = $electionslist->get($electionId);
+                    $electionDate = $election->date;
+                    $electionYear = $electionDate->format('Y');
+                    $electionLabel = h($electionYear);
 
-                    $multipleMembersData = [];
+                    if ($winnerId !== "Multiple Members, see results") {
+                        $candidate = $candidates->get($winnerId);
+                        $candidateName = h($candidate->name);
 
-                    foreach ($winners as $electionId => $winnerId) {
-                        $election = $electionslist->get($electionId);
-                        $electionDate = $election->date;
-                        $electionYear = $electionDate->format('Y');
-                        $electionLabel = h($electionYear);
-
-                        // Check if the winner is "Multiple Members"
-                        if ($winnerId === "Multiple Members, see results") {
-                            // Accumulate the election data for multiple members
-                            $multipleMembersData[] = [
-                                'year' => $electionYear,
-                                'electionId' => $electionId
-                            ];
-                        } else {
-                            // Display the row for individual winners
-                            if (!empty($multipleMembersData)) {
-                                // Display a single row for multiple members with links
-                                $firstYearData = reset($multipleMembersData); // Get the first year's data
-                                $lastYearData = end($multipleMembersData);   // Get the last year's data
-                                $multipleMembersText = "Multiple Members, see results
-                                   <td>{$this->Html->link($firstYearData['year'], ['controller' => 'Elections', 'action' => 'view', $firstYearData['electionId']])}</td>
-                                   <td>{$this->Html->link($lastYearData['year'], ['controller' => 'Elections', 'action' => 'view', $lastYearData['electionId']])}</td>";
-
-                                echo "<tr>
-                  <td>{$multipleMembersText}</td>
-                  <td>N/A</td>
-              </tr>";
-
-                                // Reset the array for the next set of multiple members
-                                $multipleMembersData = [];
-                            }
-
-                            // Display the row for individual winners
-                            $candidate = $candidates->get($winnerId);
-                            $candidateName = h($candidate->name);
-
-                            if (isset($prevWinnerId)) {
-                                $prevCandName = h($candidates->get($prevWinnerId)->name);
-                            }
-
-                            if ($winnerId !== $prevWinnerId or !isset($prevWinnerId)) {
-                                // Output the row for the streak
-                                if ($streakStartYear !== null) {
-                                    echo "<tr>
-                        <td>{$this->Html->link($prevCandName, ['controller' => 'Candidates', 'action' => 'view', $prevWinnerId])}</td>
-                        <td>{$this->Html->link($electionLabel, ['controller' => 'Elections', 'action' => 'view', $election->id])}</td>
-                        <td>{$this->Html->link($streakStartYear, ['controller' => 'Elections', 'action' => 'view', $streakStartElectionId])}</td>
-                      </tr>";
-                                }
-
-                                // Start a new streak
-                                $streakStartYear = $electionYear;
-                                $streakStartElectionId = $electionId;
-                            }
-
-                            // Update the previous winner ID
-                            $prevWinnerId = $winnerId;
+                        // Initialize or update the candidate entry in $tableData
+                        if (!isset($tableData[$candidateName])) {
+                            $tableData[$candidateName] = [];
                         }
+
+                        // Add the election year to the candidate's entry
+                        $tableData[$candidateName][] = [
+                            'year' => $electionYear,
+                            'electionId' => $electionId,
+                        ];
+                    }
+                }
+
+                // Display the table
+                echo '<table>';
+                echo '<tr><th>Member</th><th>Elected</th></tr>';
+
+                foreach ($tableData as $candidateName => $elections) {
+                    // Display the row for the candidate
+                    echo '<tr>';
+                    echo '<td>' . $this->Html->link($candidateName, ['controller' => 'Candidates', 'action' => 'view', $elections[0]['electionId']]) . '</td>';
+
+                    // Build an array of links to election pages
+                    $electionLinks = [];
+                    foreach ($elections as $election) {
+                        $electionLinks[] = $this->Html->link($election['year'], ['controller' => 'Elections', 'action' => 'view', $election['electionId']]);
                     }
 
-                    // Display the final row for multiple members if any
-                    if (!empty($multipleMembersData)) {
-                        $firstYearData = reset($multipleMembersData); // Get the first year's data
-                        $lastYearData = end($multipleMembersData);   // Get the last year's data
-                        $multipleMembersText = "Multiple Members, see results
-<td>{$this->Html->link($lastYearData['year'], ['controller' => 'Elections', 'action' => 'view', $lastYearData['electionId']])}</td>
-                           <td>{$this->Html->link($firstYearData['year'], ['controller' => 'Elections', 'action' => 'view', $firstYearData['electionId']])}</td>"
-                           ;
+                    echo '<td>' . implode(' ', array_reverse($electionLinks)) . '</td>';
+                    echo '</tr>';
+                }
 
-                        echo "<tr>
-          <td>{$multipleMembersText}</td>
-
-      </tr>";
-                    }
-
-
-
-
-
-
-                    // Output the last row if there is an ongoing streak
-                    if ($streakStartYear !== null && $winnerId != "Multiple Members, see results") {
-                        echo "<tr>
-                <td>{$this->Html->link($candidateName, ['controller' => 'Candidates', 'action' => 'view', $winnerId])}</td>
-                <td>{$this->Html->link($electionLabel, ['controller' => 'Elections', 'action' => 'view', $election->id])}</td>
-                <td>{$this->Html->link($electionslist->get($election->id - 1)->date->format('Y'), ['controller' => 'Elections', 'action' => 'view', $election->id - 1])}</td>
-              </tr>";
-                    }
-                    ?>
-
-                </table>
+                echo '</table>';
+                ?>
 
 
 

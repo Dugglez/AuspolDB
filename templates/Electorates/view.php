@@ -132,7 +132,8 @@
                 foreach ($tableData as $candidateName => $elections) {
                     // Display the row for the candidate
                     echo '<tr>';
-                    echo '<td>' . $this->Html->link($candidateName, ['controller' => 'Candidates', 'action' => 'view', $candidate->id]) . '</td>';
+                    $candidateId = $candidates->find('all')->where(['name' => $candidateName])->first()->id;
+                    echo '<td>' . $this->Html->link($candidateName, ['controller' => 'Candidates', 'action' => 'view', $candidateId]) . '</td>';
 
                     // Build an array of links to election pages
                     $electionLinks = [];

@@ -273,7 +273,7 @@
                             ];
 
                             // Check if the selected label contains 'Federal'
-                            if (selectedLabel.includes('Federal')) {
+                            if (selectedLabel.includes('Federal') || selectedLabel.includes('Victoria')) {
                                 questionMarks.forEach(function (questionMark) {
                                     questionMark.style.display = 'block';
                                 });
@@ -314,7 +314,7 @@
 
 
 
-
+                    <?php if ($electorate->jurisdiction=="Federal"): ?>
                     <div class="tooltip-container" style="display: none; align-items: center; position: relative;">
                         <h5 style="display: inline-block; margin-right: 5px;">Please note: Federal 2CP Vote counts from 1983 and earlier are inaccurate.</h5>
                         <div class="tooltip" style="display: inline-block; margin-top: -22px" data-tooltip="Please note: Federal 2CP Vote counts from 1983 and earlier are inaccurate;">
@@ -330,10 +330,24 @@
 
 
 
+                    <?php else: ?>
+                    <div class="tooltip-container" style="display: none; align-items: center; position: relative;">
+                        <h5 style="display: inline-block; margin-right: 5px;">Please note: 2CP Vote counts are inaccurate.</h5>
+                        <div class="tooltip" style="display: inline-block; margin-top: -22px" data-tooltip="Please note: Federal 2CP Vote counts from 1983 and earlier are inaccurate;">
+                            <span class="question-mark">?</span>
+                        </div>
+                        <div style="display: none;" class="tooltip-content">
+                            <p>
+                                Some state 2CP vote counts were not recorded in electorates where a majority of votes were achieved by one candidate.
+                                The vote counts provided are based on the 2CP percentage, meaning they are inaccurate to within 0.1% of the formal vote.
+                            </p>
+                        </div>
+                    </div>
+
+                <?php endif; ?>
 
 
-
-
+                <?php if ($electorate->jurisdiction=="Federal"): ?>
                     <div id="content" class="tooltip" style="display: none; background-color: #333; color: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); font-size: 14px; ">
                         2CP (Two-candidate preferred) represents the percentage of formal votes
                         a candidate received after the distribution of preferences. Prior to the 1919 election, Australian federal elections used
@@ -341,6 +355,15 @@
                         Instead, the majority is recorded, which is the difference in votes between the winning candidate and the second candidate.
                     </div>
                     <div class="table-responsive" id="electionInfoTableContainer" style="margin-top: 20px; display: none;">
+                <?php else: ?>
+                    <div id="content" class="tooltip" style="display: none; background-color: #333; color: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); font-size: 14px; ">
+                        2CP (Two-candidate preferred) represents the percentage of formal votes
+                        a candidate received after the distribution of preferences. All Australian states and self-governing territories use a
+                        form of preferential voting for lower house elections, but it was not always so. Where the 2CP value is greater than 100,
+                        the value represented is instead the majority, which is the difference in votes between the winning candidate and the second candidate.
+                    </div>
+                    <div class="table-responsive" id="electionInfoTableContainer" style="margin-top: 20px; display: none;">
+                        <?php endif; ?>
                         <table id="electionInfoTable">
                             <tr>
                                 <th style="display: flex;">
@@ -363,7 +386,12 @@
 
                                         if ($twocp_or_majority == 99.99) {
                                             echo 'Uncontested';
-                                        } else {
+                                        } elseif($twocp_or_majority == 99999999){
+                                            echo '2CP Unknown';
+                                        }
+
+
+                                        else {
                                             // Check if $twocp_or_majority is greater than 100
                                             if ($twocp_or_majority > 100) {
                                                 // Display as integer with no decimals
@@ -391,7 +419,15 @@
                                         echo $this->Html->link(h($winningParty->name), ['controller' => 'Parties', 'action' => 'view', $winningParty->id]);
                                         ?>
                                     </td>
-                                    <td><?= h($electionsElectorate->winning_votes) ?></td>
+                                    <?php
+                                    $winningVotes = $electionsElectorate->winning_votes;
+
+                                    if ($winningVotes !== 2147483647 && $winningVotes !== -2147483648) {
+                                        echo "<td>" . h($winningVotes) . "</td>";
+                                    } else {
+                                        echo "<td>Unknown</td>";
+                                    }
+                                    ?>
                                     <td>
                                         <?php
                                         // Get the second candidate information
@@ -408,9 +444,18 @@
                                     </td>
                                     <td>
                                         <?php
-                                        echo isset($electionsElectorate->second_votes) ? h($electionsElectorate->second_votes) : 'None';
+                                        $secondVotes = isset($electionsElectorate->second_votes) ? $electionsElectorate->second_votes : null;
+
+                                        if (!isset($secondVotes)) {
+                                            echo 'None';
+                                        } elseif ($secondVotes !== 2147483647 && $secondVotes !== -2147483648) {
+                                            echo h($secondVotes);
+                                        } else {
+                                            echo 'Unknown';
+                                        }
                                         ?>
                                     </td>
+
 
                                 </tr>
                             <?php endforeach; ?>

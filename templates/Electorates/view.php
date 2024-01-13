@@ -355,8 +355,10 @@
                     <div id="content" class="tooltip" style="display: none; background-color: #333; color: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); font-size: 14px; ">
                         2CP (Two-candidate preferred) represents the percentage of formal votes
                         a candidate received after the distribution of preferences. All Australian states and self-governing territories use a
-                        form of preferential voting for lower house elections, but it was not always so. Where the 2CP value is greater than 100,
-                        the value represented is instead the majority, which is the difference in votes between the winning candidate and the second candidate.
+                        form of preferential voting for lower house elections, but it was not always so. Where there is no difference between the final
+                        two candidates' votes and their primary votes, the value represented in the 2CP field
+                        is instead the majority, which is the difference in votes between the winning candidate and the second candidate.
+                        Errors
                     </div>
                     <div class="table-responsive" id="electionInfoTableContainer" style="margin-top: 20px; display: none;">
                         <?php endif; ?>

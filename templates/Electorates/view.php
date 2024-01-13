@@ -146,7 +146,7 @@
                         echo "<tr>
                 <td>{$this->Html->link($candidateName, ['controller' => 'Candidates', 'action' => 'view', $winnerId])}</td>
                 <td>{$this->Html->link($electionLabel, ['controller' => 'Elections', 'action' => 'view', $election->id])}</td>
-                <td>{$this->Html->link($streakStartYear, ['controller' => 'Elections', 'action' => 'view', $streakStartElectionId])}</td>
+                <td>{$this->Html->link($electionslist->get($election->id - 1)->date->format('Y'), ['controller' => 'Elections', 'action' => 'view', $election->id - 1])}</td>
               </tr>";
                     }
                     ?>
@@ -410,22 +410,26 @@
 
                                     <td>
                                         <?php
+                                        if (isset($electionsElectorate->winning_candidate)){
                                         // Get the winning candidate information
                                         $winningCandidate = $candidates->get($electionsElectorate->winning_candidate);
                                         echo $this->Html->link(h($winningCandidate->name), ['controller' => 'Candidates', 'action' => 'view', $winningCandidate->id]);
+                                        }
                                         ?>
                                     </td>
                                     <td>
                                         <?php
+                                        if (isset($electionsElectorate->winning_party)){
                                         // Get the winning party information
                                         $winningParty = $parties->get($electionsElectorate->winning_party);
                                         echo $this->Html->link(h($winningParty->name), ['controller' => 'Parties', 'action' => 'view', $winningParty->id]);
+                                        }
                                         ?>
                                     </td>
                                     <?php
                                     $winningVotes = $electionsElectorate->winning_votes;
 
-                                    if ($winningVotes !== 2147483647 && $winningVotes !== -2147483648) {
+                                    if (isset($winningVotes) && $winningVotes !== 2147483647 && $winningVotes !== -2147483648) {
                                         echo "<td>" . h($winningVotes) . "</td>";
                                     } else {
                                         echo "<td>Unknown</td>";
@@ -433,17 +437,19 @@
                                     ?>
                                     <td>
                                         <?php
-                                        // Get the second candidate information
-                                        $secondCandidate = isset($electionsElectorate->second_candidate) ? $candidates->get($electionsElectorate->second_candidate) : null;
-                                        echo isset($secondCandidate->name) ? $this->Html->link(h($secondCandidate->name), ['controller' => 'Candidates', 'action' => 'view', $secondCandidate->id]) : 'None';
-                                        ?>
+                                        if (isset($electionsElectorate->second_candidate)) {
+                                            // Get the second candidate information
+                                            $secondCandidate = isset($electionsElectorate->second_candidate) ? $candidates->get($electionsElectorate->second_candidate) : null;
+                                            echo isset($secondCandidate->name) ? $this->Html->link(h($secondCandidate->name), ['controller' => 'Candidates', 'action' => 'view', $secondCandidate->id]) : 'None';
+                                        }?>
                                     </td>
                                     <td>
                                         <?php
-                                        // Get the second party information
-                                        $secondParty = isset($electionsElectorate->second_candidate) ? $parties->get($electionsElectorate->second_party) : null;
-                                        echo isset($secondParty->name) ? $this->Html->link(h($secondParty->name), ['controller' => 'Parties', 'action' => 'view', $secondParty->id]) : 'None';
-                                        ?>
+                                        if (isset($electionsElectorate->second_party)) {
+                                            // Get the second party information
+                                            $secondParty = isset($electionsElectorate->second_candidate) ? $parties->get($electionsElectorate->second_party) : null;
+                                            echo isset($secondParty->name) ? $this->Html->link(h($secondParty->name), ['controller' => 'Parties', 'action' => 'view', $secondParty->id]) : 'None';
+                                        }?>
                                     </td>
                                     <td>
                                         <?php

@@ -132,7 +132,7 @@
                 foreach ($tableData as $candidateName => $elections) {
                     // Display the row for the candidate
                     echo '<tr>';
-                    echo '<td>' . $this->Html->link($candidateName, ['controller' => 'Candidates', 'action' => 'view', $elections[0]['electionId']]) . '</td>';
+                    echo '<td>' . $this->Html->link($candidateName, ['controller' => 'Candidates', 'action' => 'view', $candidate->id]) . '</td>';
 
                     // Build an array of links to election pages
                     $electionLinks = [];

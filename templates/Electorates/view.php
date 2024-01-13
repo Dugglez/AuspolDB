@@ -386,10 +386,13 @@
 
                                         if ($twocp_or_majority == 99.99) {
                                             echo 'Uncontested';
-                                        } elseif($twocp_or_majority == 99999999){
+                                        } elseif ($twocp_or_majority == 99999999) {
                                             echo '2CP Unknown';
+                                        } elseif (preg_match('/^12345678/', substr($twocp_or_majority, 0, 8))) {
+                                            // Extract the 9th digit
+                                            $ninth_digit = substr($twocp_or_majority, 8, 1);
+                                            echo "{$ninth_digit} Member District";
                                         }
-
 
                                         else {
                                             // Check if $twocp_or_majority is greater than 100

@@ -126,28 +126,72 @@ class ElectionsController extends AppController
         // Pass the $jurisdictions to the view
         $this->set('jurisdictions', $jurisdictions);
 
-        $partyCounts = $this->fetchTable('ElectionsElectorates')
+
+        $electionElectoratesTable = $this->fetchTable('ElectionsElectorates');
+        $candidatesElectionsElectoratesTable = $this->fetchTable('CandidatesElectionsElectorates');
+
+// Step 1
+        $partyCounts = $electionElectoratesTable
             ->find()
             ->select(['winning_party'])
             ->where([
                 'election_id' => $id,
-                'winning_party IS NOT NULL' // Add this condition to check if winning_party is not null
+                'winning_party IS NOT NULL'
             ])
             ->toArray();
 
+// Step 2
+        $nullWinningPartyEntries = $electionElectoratesTable
+            ->find()
+            ->select(['electorate_id'])
+            ->where([
+                'election_id' => $id,
+                'winning_party IS NULL'
+            ])
+            ->toArray();
 
+// Step 3 and Step 4
         $houseComposition = [];
 
+        foreach ($nullWinningPartyEntries as $entry) {
+            $electorateId = $entry->electorate_id;
+
+            $winnerPartyIds = $candidatesElectionsElectoratesTable
+                ->find()
+                ->select(['party_id'])
+                ->where([
+                    'election_id' => $id,
+                    'electorate_id' => $electorateId,
+                    'winner' => 1
+                ])
+                ->toArray();
+
+            foreach ($winnerPartyIds as $winnerPartyId) {
+                $partyId = $winnerPartyId->party_id;
+
+                if (isset($houseComposition[$partyId])) {
+                    $houseComposition[$partyId]++;
+                } else {
+                    $houseComposition[$partyId] = 1;
+                }
+            }
+        }
+
+// Incorporate results from Step 1
         foreach ($partyCounts as $result) {
             $winningParty = $result->winning_party;
 
-            // Check if the party ID already exists in the result array
             if (isset($houseComposition[$winningParty])) {
                 $houseComposition[$winningParty]++;
             } else {
                 $houseComposition[$winningParty] = 1;
             }
         }
+
+// $houseComposition now contains the counts of each party in the house
+
+
+
 
 
         $candidates = $this->fetchTable('Candidates');

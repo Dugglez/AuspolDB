@@ -129,8 +129,12 @@ class ElectionsController extends AppController
         $partyCounts = $this->fetchTable('ElectionsElectorates')
             ->find()
             ->select(['winning_party'])
-            ->where(['election_id' => $id])
+            ->where([
+                'election_id' => $id,
+                'winning_party IS NOT NULL' // Add this condition to check if winning_party is not null
+            ])
             ->toArray();
+
 
         $houseComposition = [];
 

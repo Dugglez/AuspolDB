@@ -44,6 +44,9 @@ class ElectoratesController extends AppController
      */
     public function view($id = null)
     {
+        $contestId = $this->request->getQuery('contest');
+
+
         $electorate = $this->Electorates->get($id, [
             'contain' => ['Elections', 'CandidatesElectionsElectorates'],
         ]);
@@ -71,7 +74,7 @@ class ElectoratesController extends AppController
         }
 
 
-        $this->set(compact('electorate','candidates','electionslist','parties','elections_electorates','winners'));
+        $this->set(compact('electorate','candidates','electionslist','parties','elections_electorates','winners','contestId'));
     }
 
     /**

@@ -310,10 +310,18 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                                 </tr>
                                 <?php foreach ($election->electorates as $electorate) : ?>
                                     <tr data-state="<?= h($electorate->jurisdiction) ?>">
-                                        <td><?= $this->Html->link(
+                                        <td>
+                                            <?= $this->Html->link(
                                                 h($electorate->name),
-                                                ['controller' => 'Electorates', 'action' => 'view', $electorate->id]
-                                            ) ?></td>
+                                                [
+                                                    'controller' => 'Electorates',
+                                                    'action' => 'view',
+                                                    $electorate->id,
+                                                    '?' => ['contest' => $election->id]
+                                                ]
+                                            ) ?>
+                                        </td>
+
                                         <td><?= h($electorate->jurisdiction) ?></td>
                                         <td><?= h($electorate->type) ?></td>
                                     </tr>

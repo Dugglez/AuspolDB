@@ -248,11 +248,17 @@
                         <select id="electionDropdown" style="margin-left: 10px;">
                             <option value="Select">Select Election</option>
                             <?php foreach ($uniqueElections as $uniqueElectionId => $electionLabel) : ?>
-                                <option value="<?= h($uniqueElectionId) ?>"><?= h($electionLabel) ?></option>
+                                <?php $selected = ($contestId !== null && $contestId == $uniqueElectionId) ? 'selected' : ''; ?>
+                                <option value="<?= h($uniqueElectionId) ?>" <?= $selected ?>><?= h($electionLabel) ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
+
+
                     <script>
+
+
+
                         document.getElementById('electionDropdown').addEventListener('change', function () {
                             var selectedLabel = this.options[this.selectedIndex].text;
 
@@ -269,6 +275,8 @@
                             ];
 
                             // Check if the selected label contains 'Federal'
+                            var contestId = <?php echo json_encode($contestId); ?>;
+
                             if (selectedLabel.includes('Federal') || selectedLabel.includes('Victoria')) {
                                 questionMarks.forEach(function (questionMark) {
                                     questionMark.style.display = 'block';
@@ -282,6 +290,7 @@
                                 warnheader.forEach(function (warn) {
                                     warn.style.display = 'block';
                                 });
+                            }
                                 document.getElementById('electionInfoTable').style.display = 'block'
                             } else {
                                 // Hide all elements with class 'question-mark' and 'tooltip-container'
@@ -572,4 +581,60 @@
             tooltip.style.display = 'block';
         }
     }
+</script>
+<script>
+    // Assuming contestId is set as a variable
+    var contestId = <?php echo json_encode($contestId); ?>;
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // Check if contestId is not null
+        if (contestId !== null) {
+            var electionDropdown = $('#electionDropdown');
+            var tableRows = $('#candidatesTable tbody tr');
+
+
+
+
+                var selectedElectionId = contestId;
+
+                // Hide all rows before showing the selected ones
+                tableRows.hide();
+
+                // Show rows for the selected election or show all if "All" is selected
+                if (selectedElectionId === 'All') {
+                    tableRows.show();
+                } else {
+                    var selectedRows = tableRows.filter('[data-election-id="' + selectedElectionId + '"]');
+                    selectedRows.show();
+                }
+
+                // Show headers if there are rows being displayed
+                if (tableRows.is(':visible')) {
+                    tableRows.filter(':first-child').show();
+                }
+
+                // Scroll to the bottom of the screen
+                $('html, body').animate({
+                    scrollTop: $(document).height()
+                }, 'fast');
+
+            var electionDropdown = $('#electionDropdown');
+            var electionInfoTableContainer = $('#electionInfoTableContainer');
+
+
+
+                // Hide the table initially
+                electionInfoTableContainer.hide();
+
+                // Show the table and the row that matches the selected election
+                if (selectedElectionId !== 'Select Election') {
+                    $('#electionInfoTable tr[data-election-id]').hide();
+                    $('#electionInfoTable tr[data-election-id="' + selectedElectionId + '"]').show();
+                    electionInfoTableContainer.show();
+                }
+
+        }
+    });
+
 </script>

@@ -42,10 +42,21 @@ class CandidatesController extends AppController
             ->extract('id')
             ->toArray();
 
+        $lowerIds = $this->fetchTable("ElectionsElectorates")->find()
+            ->select(['id', 'election_id', 'electorate_id'])
+            ->toArray();
+
+        $upperIds = $this->fetchTable("ElectionsStates")->find()
+            ->select(['id', 'election_id', 'state'])
+            ->toArray();
+
+        $lowerIdsJson = json_encode($lowerIds);
+        $upperIdsJson = json_encode($upperIds);
 
 
 
-        $this->set(compact('candidates', 'candidateIds'));
+
+        $this->set(compact('candidates', 'candidateIds', 'lowerIdsJson', 'upperIdsJson'));
     }
 
     /**

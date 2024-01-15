@@ -29,8 +29,8 @@
     <div style="display: flex; align-items: center;">
         <h3><?= __('Candidates') ?></h3>
         <a id="randomCandidateButton" href="#" style="white-space: nowrap; margin-left:20px" class="btn btn-custom">View Random Candidate</a>
-
-        <input type="text" id="candidateSearch" placeholder="Search candidates..." style="max-width: 375px; margin-left: 300px;">
+        <a id="randomContestButton" href="#" style="white-space: nowrap; margin-left:20px" class="btn btn-custom">View Random Contest</a>
+        <input type="text" id="candidateSearch" placeholder="Search candidates..." style="max-width: 375px; margin-left: 100px;">
         <?= $this->Html->link('Search', '#', ['id' => 'searchButton', 'class' => 'btn-custom', 'style' => 'margin-left: 10px; margin-bottom: 15px']) ?>
     </div>
     <div class="table-responsive">
@@ -110,6 +110,7 @@
 $candidateIdsJSON = json_encode($candidateIds);
 ?>
 
+
 <script>
     document.getElementById('randomCandidateButton').addEventListener('click', function() {
         var candidateIds = <?php echo $candidateIdsJSON; ?>;
@@ -125,5 +126,35 @@ $candidateIdsJSON = json_encode($candidateIds);
             console.error('Invalid candidateIds array');
         }
     });
+</script>
+
+<script>
+    document.getElementById('randomContestButton').addEventListener('click', function() {
+        var upperIds = <?php echo $upperIdsJson; ?>;
+        var lowerIds = <?php echo $lowerIdsJson; ?>;
+
+        if (Array.isArray(lowerIds) && Array.isArray(upperIds) && (upperIds.length + lowerIds.length) > 0) {
+            // Generate a random number from 1 to 10
+            var randomNumber = Math.floor(Math.random() * 10) + 1;
+
+            if (randomNumber === 7) {
+                // Select a random entry from upperIds
+                var randomUpperEntry = upperIds[Math.floor(Math.random() * upperIds.length)];
+
+                // Redirect to elections view with election_id and state as query string
+                window.location.href = '/elections/view/' + randomUpperEntry.election_id + '?senate=' + encodeURIComponent(randomUpperEntry.state);
+            } else {
+                // Select a random entry from lowerIds
+                var randomLowerEntry = lowerIds[Math.floor(Math.random() * lowerIds.length)];
+
+                // Redirect to electorates view with electorate_id and election_id as query string
+                window.location.href = '/electorates/view/' + randomLowerEntry.electorate_id + '?contest=' + randomLowerEntry.election_id;
+            }
+        } else {
+            // Handle the case when candidateIds is not a valid array
+            console.error('Invalid candidateIds array');
+        }
+    });
+
 </script>
 

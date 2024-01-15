@@ -108,13 +108,15 @@ $checkConnection = function (string $name) {
                     <div class="column">
                         <h1>Welcome!</h1>
                         <p>This is AuspolDB.</p>
-<br>
-                        <ul style="display: flex; list-style: none; justify-content: space-between; padding: 200px; margin: -100px;">
+<br><br><br>
+                        <ul style="display: flex; list-style: none; justify-content: space-between;">
+
                             <li  ><?= $this->Html->link('Candidates Index', ['controller' => 'Candidates', 'action' => 'index'], ['class' => 'btn']) ?></li>
                             <li  ><?= $this->Html->link('Elections Index', ['controller' => 'Elections', 'action' => 'index'], ['class' => 'btn']) ?></li>
                             <li><?= $this->Html->link('Electorates Index', ['controller' => 'Electorates', 'action' => 'index'], ['class' => 'btn']) ?></li>
                             <li><?= $this->Html->link('Parties Index', ['controller' => 'Parties', 'action' => 'index'], ['class' => 'btn']) ?></li>
-                            <li><?= $this->Html->link('About', ['controller' => 'Pages', 'action' => 'About'], ['class' => 'btn']) ?></li>
+                            <li><?= $this->Html->link('About Elections', ['controller' => 'Pages', 'action' => 'Elections'], ['class' => 'btn']) ?></li>
+                            <li><?= $this->Html->link('About AuspolDB', ['controller' => 'Pages', 'action' => 'About'], ['class' => 'btn']) ?></li>
 
                         </ul>
 

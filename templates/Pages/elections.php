@@ -183,7 +183,7 @@
                         '1961',
                         ['controller' => 'Elections', 'action' => 'view', 69]
                     );
-                    ?>, both houses have been elected on the same day.
+                    ?>, both houses' elections have been conducted on the same day.
                     In 1962, the franchise for the Legislative Council and Legislative Assembly was extended to all adults, regardless of race or gender.
                     In 1988, following federal reform in 1984, the Cain government implemented the Group Voting Ticket system. Under
                     the system, voters could choose to either nominate preferences for every candidate using the bottom half of the ballot (which was becoming more difficult as more parties began to contest the Senate),

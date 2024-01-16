@@ -11,6 +11,7 @@
                     <br>    <br>
                     <h2>Federal</h2>
                     Prior to 1927, Federal Parliament sat at the Victorian Parliament. It then moved to Canberra, in what is now Old Parliament House. In 1988, it moved to New Parliament House, where it sits today.
+                   <br><br>
                     <h3>House of Representatives</h3>
                     At the first Australian election in <?php
                     echo $this->Html->link(

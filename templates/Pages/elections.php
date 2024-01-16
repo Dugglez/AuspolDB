@@ -10,6 +10,7 @@
                     In Australia, members of parliament are elected using various systems that have evolved over time. This page will provide information on the specifics of these systems.
                     <br>    <br>
                     <h2>Federal</h2>
+                    Prior to 1927, Federal Parliament sat at the Victorian Parliament. It then moved to Canberra, in what is now Old Parliament House. In 1988, it moved to New Parliament House, where it sits today.
                     <h3>House of Representatives</h3>
                     At the first Australian election in <?php
                     echo $this->Html->link(
@@ -138,6 +139,7 @@
 
                     <br>    <br>
                     <h2>Victoria</h2>
+                    During the years that the Federal Parliament sat in the Victorian Parliament, the Victorian Parliament sat at the Royal Exhibition Building.
                     Prior to 1870, Members of the Victorian Parliament were not paid a salary.
                     <br>    <br>
                     <h3>Legislative Council</h3>
@@ -211,7 +213,7 @@
                     electorate to stand again elsewhere."
                     Some electorates in Victoria returned more than one member. The last multi-member districts were abolished in 1907.
                     In 1908, the Legislative Assembly voting franchise was extended to non-aboriginal women.
-                    In 1922, following Federal reform, preferential voting was implemented.
+                    In 1917, following Federal reform, preferential voting was implemented.
                     In 1962, the franchise for the Legislative Council and Legislative Assembly was extended to all adults, regardless of race or gender.
 
 

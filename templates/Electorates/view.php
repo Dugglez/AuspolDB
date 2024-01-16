@@ -218,7 +218,7 @@
 
             <div class="related">
                 <?php if (!empty($electorate->candidates_elections_electorates)) : ?>
-                    <h4><?= __('Electorate Results') ?></h4>
+                    <h4><?= __('Electorate Results for '.$electorate->name) ?></h4>
                     <?php
 // Get unique election IDs and jurisdictions from $electorate->CEE
                     $uniqueElectionIds = array_unique(array_column($electorate->candidates_elections_electorates, 'election_id'));

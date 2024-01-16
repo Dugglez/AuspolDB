@@ -81,7 +81,7 @@
 
                 <tr>
                     <th><?= __('Enrolment at last contest') ?></th>
-                    <td><?= $electorate->population === null ? __('Unknown') : $this->Number->format($electorate->population) ?></td>
+                    <td><?= ($electorate->population === null || $electorate->population == 0) ? __('Unknown') : $this->Number->format($electorate->population) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Abolished') ?></th>

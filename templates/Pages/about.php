@@ -34,6 +34,12 @@
                         Why did he do this? We may never know, but at least we now know that it happened. There are
                         sure to be more mysteries to be discovered in the election data.
                         This site was built using CakePHP 4, and the data is stored on a MySQL database.
+                        There are certain inaccuracies in the data due to the original dataset's naming conventions for candidates.
+                        Certain candidates have their information scattered across different pages, despite all belonging to one person
+                        (Wilfred Kent Hughes is one example). There are also single pages that contain data for multiple people,
+                        such as Robert Katter, which contains information for Bob Katter Sr. and Jr., as they both appeared in the dataset with
+                        the same name (until 2004). Otherwise, I have gone to great lengths to ensure the integrity of the data, and
+                        am quite happy with the state it's in.
 
                         If you consider yourself technically inclined, you can download the dataset if you'd like to
                         manipulate it in ways I hadn't considered, or just to run SQL statements on it. AuspolDB's

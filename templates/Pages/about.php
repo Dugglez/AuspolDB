@@ -34,6 +34,7 @@
                         Why did he do this? We may never know, but at least we now know that it happened. There are
                         sure to be more mysteries to be discovered in the election data.
                         This site was built using CakePHP 4, and the data is stored on a MySQL database.
+
                         If you consider yourself technically inclined, you can download the dataset if you'd like to
                         manipulate it in ways I hadn't considered, or just to run SQL statements on it. AuspolDB's
                         dataset and source code is available on GitHub.
@@ -49,6 +50,7 @@
                         practice with.
                         In my spare time, I sometimes produce documentaries on Australian politics and history.
                         <a href="https://www.youtube.com/dugglez" target="_blank"> You can find my Youtube Channel here.</a>
+                        You can write to me at dugglez@auspoldb.org
 
                     </p>
                     <br>

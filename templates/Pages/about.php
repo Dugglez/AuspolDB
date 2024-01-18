@@ -19,20 +19,11 @@
                         Not only that, but it has the advantage over Wikipedia's records (which, like AuspolDB,
                         are sourced from Adam Carr's<a href="http://psephos.adam-carr.net/countries/a/australia/" target="_blank"> election archive</a>)
                         that it can be searched and filtered through. Certainly, with both sites you could find all the results in an electorate,
-                        or find where a particular elected MP ran in a particular year, but it would be far more difficult
-                        to find Wilhelm Kapphan using Wikipedia than it was using AuspolDB.
-
-                        <?php
-                        echo $this->Html->link(
-                            'Wilhelm Kapphan ',
-                            ['controller' => 'Candidates', 'action' => 'view', 10315]
-                        );
-                        ?>
-                        ran in four separate Victorian divisions in the 1980 Federal election, as well as for the senate in Victoria.
-                        He was not successful in any of his five contests. It appears he
-                        <a href="https://companieshouse.com.au/the-trustee-for-wilhelm-kapphan-11453040613" target="_blank">died in 2016. </a>
-                        Why did he do this? We may never know, but at least we now know that it happened. There are
-                        sure to be more mysteries to be discovered in the election data.
+                        or find where a particular elected MP ran in a particular year, but what if you only knew a candidate's first name?
+                        What if you wanted to learn about unelected candidates, and where else they ran? What if you wanted to know
+                        what the most common first name is for candidates (John)? What if you wanted to know which party has run the most
+                        candidates with hyphenated names (The Greens, though Independents technically lead them)? The answers to all these questions
+                        and several more lie within the dataset.
                         This site was built using CakePHP 4, and the data is stored on a MySQL database.
                         There are certain inaccuracies in the data due to the original dataset's naming conventions for candidates.
                         Certain candidates have their information scattered across different pages, despite all belonging to one person

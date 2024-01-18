@@ -73,7 +73,7 @@
                         // Check conditions for displaying the message
                         if (($electorate->name === "South Australia" || $electorate->name === "Tasmania") && $electorate->type === 'Division') {
                             $memberCount = ($electorate->name === "South Australia") ? 7 : 5;
-                            echo " (Proportional district that elected $memberCount members, disregard 2CP)";
+                            echo " (Multi-member district that elected $memberCount members, disregard 2CP)";
                         }
                         ?>
                     </td>

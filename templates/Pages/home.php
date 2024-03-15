@@ -102,23 +102,23 @@ $checkConnection = function (string $name) {
 
     <main class="main">
         <div class="container">
-            <div class="content">
+            <div class="content" style="width: 110%;">
 
                 <div class="row">
-                    <div class="column">
+                    <div class="column" >
                         <h1>Welcome!</h1>
                         <p>This is AuspolDB.</p>
 <br><br><br>
-                        <ul style="display: flex; list-style: none; justify-content: space-between;">
+<ul style="display: flex; list-style: none; justify-content: space-between; ">
+    <li><?= $this->Html->link('Candidates Index', ['controller' => 'Candidates', 'action' => 'index'], ['class' => 'btn']) ?></li>
+    <li><?= $this->Html->link('Elections Index', ['controller' => 'Elections', 'action' => 'index'], ['class' => 'btn']) ?></li>
+    <li><?= $this->Html->link('Electorates Index', ['controller' => 'Electorates', 'action' => 'index'], ['class' => 'btn']) ?></li>
+    <li><?= $this->Html->link('Parties Index', ['controller' => 'Parties', 'action' => 'index'], ['class' => 'btn']) ?></li>
+    <li><?= $this->Html->link('About Elections', ['controller' => 'Pages', 'action' => 'Elections'], ['class' => 'btn']) ?></li>
+    <li><?= $this->Html->link('About AuspolDB', ['controller' => 'Pages', 'action' => 'About'], ['class' => 'btn']) ?></li>
+    <li><?= $this->Html->link('Articles', ['controller' => 'Pages', 'action' => 'Articles'], ['class' => 'btn']) ?></li>
+</ul>
 
-                            <li  ><?= $this->Html->link('Candidates Index', ['controller' => 'Candidates', 'action' => 'index'], ['class' => 'btn']) ?></li>
-                            <li  ><?= $this->Html->link('Elections Index', ['controller' => 'Elections', 'action' => 'index'], ['class' => 'btn']) ?></li>
-                            <li><?= $this->Html->link('Electorates Index', ['controller' => 'Electorates', 'action' => 'index'], ['class' => 'btn']) ?></li>
-                            <li><?= $this->Html->link('Parties Index', ['controller' => 'Parties', 'action' => 'index'], ['class' => 'btn']) ?></li>
-                            <li><?= $this->Html->link('About Elections', ['controller' => 'Pages', 'action' => 'Elections'], ['class' => 'btn']) ?></li>
-                            <li><?= $this->Html->link('About AuspolDB', ['controller' => 'Pages', 'action' => 'About'], ['class' => 'btn']) ?></li>
-
-                        </ul>
 
 
                     </div>

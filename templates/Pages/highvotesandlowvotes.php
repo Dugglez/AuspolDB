@@ -115,7 +115,7 @@ $checkConnection = function (string $name) {
                     <div class="column" >
                         <h1>Select Data: High and Low votes</h1>
 
-<br>
+<br><br>
 <p>
     Given I now have this dataset, I think it would be worth exploring some of the interesting information that is contained within it.
     The ability to run SQL commands on the dataset makes finding some answers quite easy. The question I will be addressing in this, the first 
@@ -126,7 +126,7 @@ $checkConnection = function (string $name) {
     and hence have victorious candidates recording 0 primary votes, but that is not what we are looking for here.
 
 
-    <br>
+    <br><br>
     In 1856, at the first Victorian election, <?php
                     echo $this->Html->link(
                         'James McCulloch',
@@ -141,7 +141,7 @@ $checkConnection = function (string $name) {
                     recording just 25 primary votes, beating the third candidate by a single vote. There are several more candidates in 
                     that election who recorded primary votes of less than 100 but managed to be elected. 
 
-    <br>
+    <br><br>
     At a federal level, the smallest primary vote I can find for an elected candidate is in the <?php
                     echo $this->Html->link(
                         'Division of Northern Territory',
@@ -161,7 +161,7 @@ $checkConnection = function (string $name) {
                     );
                     ?> by a margin of 9 votes. The next 8 entries all come from the Northern Territory in various years.
 
-                    <br>
+                    <br><br>
                     At the other end of the scale, the largest primary vote in terms of raw numbers at a federal level was recorded in 
                     2010 by <?php
                     echo $this->Html->link(
@@ -185,7 +185,7 @@ $checkConnection = function (string $name) {
                         ['controller' => 'Electorate', 'action' => 'view', 50]
                     );
                     ?>, with a 2CP vote of 79242.
-                    <br>
+                    <br><br>
                     In Victoria, the first result I found was a data entry error. The second, which I believe to be correct, is 
                     <?php
                     echo $this->Html->link(

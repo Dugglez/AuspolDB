@@ -117,10 +117,11 @@ $checkConnection = function (string $name) {
 
 <br>
 <ul style="display: flex; list-style: none; justify-content: space-between; flex-direction: column;">
+     <li><?= $this->Html->link('Select Data: High and Low votes', ['controller' => 'Pages', 'action' => 'highvotesandlowvotes'], ['class' => 'big-link']) ?></li>
+    <li style="border-bottom: 1px solid #000; margin-bottom: 10px; padding-bottom: 5px;"></li>
     <li><?= $this->Html->link('The Swan By-Election Myth', ['controller' => 'Pages', 'action' => 'swanbyelection'], ['class' => 'big-link']) ?></li>
     <li style="border-bottom: 1px solid #000; margin-bottom: 10px; padding-bottom: 5px;"></li>
-    <li><?= $this->Html->link('Select Data: High and Low votes', ['controller' => 'Pages', 'action' => 'highvotesandlowvotes'], ['class' => 'big-link']) ?></li>
-    <li style="border-bottom: 1px solid #000; margin-bottom: 10px; padding-bottom: 5px;"></li>
+   
 </ul>
 
 

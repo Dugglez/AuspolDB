@@ -220,12 +220,6 @@ $checkConnection = function (string $name) {
 </p>
 
 
-<?php
-                    echo $this->Html->link(
-                        'Sir Earle Page',
-                        ['controller' => 'Candidates', 'action' => 'view', 12366]
-                    );
-                    ?>
 
 
                     </div>

@@ -127,15 +127,15 @@ $checkConnection = function (string $name) {
 
 
     <br><br>
-    In 1856, at the first Victorian election, <?php
+    In 1856, at the first Victorian Legislative Assembly election, <?php
                     echo $this->Html->link(
                         'James McCulloch',
                         ['controller' => 'Candidates', 'action' => 'view', 25338]
                     );
-                    ?>, who would go on to serve as Victoria's third longest-serving premier, was elected as one of two representatives for <?php
+                    ?>, who would go on to serve as Victoria's third longest-serving premier, was elected as the second of two representatives for <?php
                     echo $this->Html->link(
                         'Wimmera',
-                        ['controller' => 'Electorate', 'action' => 'view', 347]
+                        ['controller' => 'Electorates', 'action' => 'view', 347]
                     );
                     ?>,
                     recording just 25 primary votes, beating the third candidate by a single vote. There are several more candidates in 
@@ -145,7 +145,7 @@ $checkConnection = function (string $name) {
     At a federal level, the smallest primary vote I can find for an elected candidate is in the <?php
                     echo $this->Html->link(
                         'Division of Northern Territory',
-                        ['controller' => 'Electorate', 'action' => 'view', 168]
+                        ['controller' => 'Electorates', 'action' => 'view', 168]
                     );
                     ?> in 1922, 
     where <?php
@@ -171,7 +171,7 @@ $checkConnection = function (string $name) {
                     ?> in her division of <?php
                     echo $this->Html->link(
                         'Lalor',
-                        ['controller' => 'Electorate', 'action' => 'view', 89]
+                        ['controller' => 'Electorates', 'action' => 'view', 89]
                     );
                     ?>, with a vote of 66298, which rose to 74452 after preferences. This is only the fourth-biggest
                     vote in terms of two-candidate preferred, however. The largest 2CP vote was recorded by <?php
@@ -182,7 +182,7 @@ $checkConnection = function (string $name) {
                     ?> in 2016 in his division of <?php
                     echo $this->Html->link(
                         'Fenner',
-                        ['controller' => 'Electorate', 'action' => 'view', 50]
+                        ['controller' => 'Electorates', 'action' => 'view', 50]
                     );
                     ?>, with a 2CP vote of 79242.
                     <br><br>
@@ -195,7 +195,7 @@ $checkConnection = function (string $name) {
                     ?> in her division of <?php
                     echo $this->Html->link(
                         'Yuroke',
-                        ['controller' => 'Electorate', 'action' => 'view', 314]
+                        ['controller' => 'Electorates', 'action' => 'view', 314]
                     );
                     ?> at the 2018 election, with a primary vote of 28519. Spence's is also the second-highest 2CP vote.
                     The highest 2CP vote, which I originally thought was a data entry error as well, actually turned out to be correct. Instead of coming 
@@ -208,7 +208,7 @@ $checkConnection = function (string $name) {
                     ?> recorded a 2CP vote of 34333, compared with Spence's 2018 2CP vote of 33740. Wiltshire's division of <?php
                     echo $this->Html->link(
                         'Mulgrave',
-                        ['controller' => 'Electorate', 'action' => 'view', 272]
+                        ['controller' => 'Electorates', 'action' => 'view', 272]
                     );
                     ?> had a turnout around 5000 
                     votes higher than any other electorate of that year. 

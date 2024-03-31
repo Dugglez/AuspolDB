@@ -212,7 +212,7 @@ $checkConnection = function (string $name) {
                     );
                     ?> had a turnout around 5000 
                     votes higher than any other electorate of that year. 
-
+<br><br>
                     And finally, I'll look briefly at the Victorian Legislative Council and Federal Senate. These results are less meaningful as, in elections with above-the-line voting, the first on a party's ticket usually
  gets the majority of the vote share, leading those elected lower down on the ticket to have much smaller primary votes. In Victoria, <?php
                     echo $this->Html->link(
@@ -232,7 +232,7 @@ $checkConnection = function (string $name) {
                         ['controller' => 'Candidates', 'action' => 'view', 6997]
                     );
                     ?>, Tucker built his election on preferences from other candidates, which flowed to him from WA's now-defunct Group Voting Ticket system.
-    <br><br>
+
     And conversely, in 2007, <?php
                     echo $this->Html->link(
                         'Mark Arbib',

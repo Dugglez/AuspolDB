@@ -213,7 +213,37 @@ $checkConnection = function (string $name) {
                     ?> had a turnout around 5000 
                     votes higher than any other electorate of that year. 
 
-
+                    And finally, I'll look briefly at the Victorian Legislative Council and Federal Senate. These results are less meaningful as, in elections with above-the-line voting, the first on a party's ticket usually
+ gets the majority of the vote share, leading those elected lower down on the ticket to have much smaller primary votes. In Victoria, <?php
+                    echo $this->Html->link(
+                        'James Henty',
+                        ['controller' => 'Candidates', 'action' => 'view', 27448]
+                    );
+                    ?> was elected as member for Portland Province in 1853 with a primary vote of 38, defeating his opponent by a margin of 12. At a federal level, <?php
+                    echo $this->Html->link(
+                        'Malcolm Roberts',
+                        ['controller' => 'Candidates', 'action' => 'view', 15489]
+                    );
+                    ?> was elected second on the One Nation ticket in Queensland
+    in 2016 with 77 primary votes. A datum not present in this set, but still worth noting, is Wilson Tucker in Western Australia, who was elected first on his ticket with a primary vote of 98. Unlike Roberts, who benefited 
+    from a surplus of votes from One Nation leader <?php
+                    echo $this->Html->link(
+                        'Pauline Hanson',
+                        ['controller' => 'Candidates', 'action' => 'view', 6997]
+                    );
+                    ?>, Tucker built his election on preferences from other candidates, which flowed to him from WA's now-defunct Group Voting Ticket system.
+    <br><br>
+    And conversely, in 2007, <?php
+                    echo $this->Html->link(
+                        'Mark Arbib',
+                        ['controller' => 'Candidates', 'action' => 'view', 16634]
+                    );
+                    ?> led the ALP ticket in New South Wales, garnering a primary vote of 1760222, and in Victoria, Labor's ticket in the Western Metropolitan Region in 2006 was led by <?php
+                    echo $this->Html->link(
+                        'Justin Madden',
+                        ['controller' => 'Candidates', 'action' => 'view', 20710]
+                    );
+                    ?>, who received 217188 primary votes.
 
 
 

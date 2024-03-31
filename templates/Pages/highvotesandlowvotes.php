@@ -233,7 +233,7 @@ $checkConnection = function (string $name) {
                     );
                     ?>, Tucker built his election on preferences from other candidates, which flowed to him from WA's now-defunct Group Voting Ticket system.
 
-    And conversely, in 2007, <?php
+    Conversely, in 2007, <?php
                     echo $this->Html->link(
                         'Mark Arbib',
                         ['controller' => 'Candidates', 'action' => 'view', 16634]

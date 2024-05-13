@@ -17,7 +17,8 @@
                         election and comparing the months manually took a bit of time. If I could query a
                         database that had all this information, I could have answered it so much quicker.
                         Not only that, but it has the advantage over Wikipedia's records (which, like AuspolDB,
-                        are sourced from Adam Carr's<a href="http://psephos.adam-carr.net/countries/a/australia/" target="_blank"> election archive</a>)
+                        are sourced from Adam Carr's<a href="http://psephos.adam-carr.net/countries/a/australia/" target="_blank"> election archive</a> and
+                        <a href="https://www.parliament.nsw.gov.au/electionresults18562007/" target="_blank"> Antony Green's NSW election archive</a>)
                         that it can be searched and filtered through. Certainly, with both sites you could find all the results in an electorate,
                         or find where a particular elected MP ran in a particular year, but what if you only knew a candidate's first name?
                         What if you wanted to learn about unelected candidates, and where else they ran? What if you wanted to know

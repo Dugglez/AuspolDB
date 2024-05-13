@@ -31,7 +31,8 @@
                         (Wilfred Kent Hughes is one example). There are also single pages that contain data for multiple people,
                         such as Robert Katter, which contains information for Bob Katter Sr. and Jr., as they both appeared in the dataset with
                         the same name (until 2004). Otherwise, I have gone to great lengths to ensure the integrity of the data, and
-                        am quite happy with the state it's in.
+                        am quite happy with the state it's in. I'd like to give a special thanks to Antony Green, who gave me access
+                        to NSW Legislative Council election results from 1978 to 1991 in a machine-readable format not previously available anywhere else (except in PDF form).
 
                         If you consider yourself technically inclined, you can download the dataset if you'd like to
                         manipulate it in ways I hadn't considered, or just to run SQL statements on it. AuspolDB's

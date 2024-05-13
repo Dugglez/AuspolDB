@@ -216,6 +216,9 @@
                     In 1908, the Legislative Assembly voting franchise was extended to non-aboriginal women.
                     In 1917, following Federal reform, preferential voting was implemented.
                     In 1962, the franchise for the Legislative Council and Legislative Assembly was extended to all adults, regardless of race or gender.
+                    <h1>New South Wales</h1>
+<p>The history of the New South Wales parliament and its election has been finely explained by others, and I would be paraphrasing them if I were to write my own version of what has already been said. You can find out about the history of the Legislative Assembly <a href="https://www.parliament.nsw.gov.au/la/roleandhistory/Pages/The-history-of-the-Legislative-Assembly.aspx">here</a> from the Parliament of New South Wales' website, and the Legislative Council <a href="https://www.abc.net.au/news/elections/nsw/2019/guide/legislative-council-history">here</a> from Antony Green.</p>
+
 
 
                 </div>

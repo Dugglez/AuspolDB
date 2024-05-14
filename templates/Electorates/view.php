@@ -125,6 +125,10 @@
                     }
                 }
 
+                usort($tableData, function($a, $b) {
+    return $a['electionId'] <=> $b['electionId'];
+});
+
                 // Display the table
                 echo '<table>';
                 echo '<tr><th>Member</th><th>Elected</th></tr>';

@@ -125,9 +125,6 @@
                     }
                 }
 
-usort($tableData, function($a, $b) {
-    return $a['year'] <=> $b['year'];
-});
 
                 // Display the table
                 echo '<table>';

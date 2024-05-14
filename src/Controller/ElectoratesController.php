@@ -73,6 +73,8 @@ class ElectoratesController extends AppController
             }
         }
 
+        ksort($winners);
+
 
         $this->set(compact('electorate','candidates','electionslist','parties','elections_electorates','winners','contestId'));
     }

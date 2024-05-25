@@ -74,12 +74,17 @@ class CandidatesController extends AppController
 
 
 
-        $lowerHouseContests = $this->fetchTable('CandidatesElectionsElectorates')->find('all', [
+              $lowerHouseContests = $this->fetchTable('CandidatesElectionsElectorates')->find('all', [
             'conditions' => ['CandidatesElectionsElectorates.candidate_id' => $id],
+            'contain' => ['Elections'], // Ensure Elections table is joined
+            'order' => ['Elections.date' => 'DESC'] // Order by Elections.date
         ])->toArray();
+        
 
         $upperHouseContests = $this->fetchTable('CandidatesElectionsStates')->find('all', [
             'conditions' => ['CandidatesElectionsStates.candidate_id' => $id],
+            'contain' => ['Elections'], // Ensure Elections table is joined
+            'order' => ['Elections.date' => 'ASC'] // Order by Elections.date
         ])->toArray();
 
         $elections = $this->fetchTable('Elections');

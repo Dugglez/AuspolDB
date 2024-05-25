@@ -52,10 +52,17 @@ class PartiesController extends AppController
         $electorates = $this->fetchTable('Electorates');
         $elections = $this->fetchTable('Elections');
 
-        // Get unique election IDs from CandidatesElectionsElectorates
+        
         $uniqueElectionIds = array_unique(
             array_column($party['candidates_elections_electorates'], 'election_id')
         );
+
+        $elections2 = $this->fetchTable('Elections')->find('all', [
+            'conditions' => ['Elections.id IN' => $uniqueElectionIds],
+            'order' => ['Elections.date' => 'DESC'] // Order by Elections.date
+        ])->toArray();
+
+        $uniqueElectionIds = array_column($elections2, 'id');
 
         $query = $this->fetchTable('CandidatesElectionsStates')->find()
             ->select(['CandidatesElectionsStates.election_id'])

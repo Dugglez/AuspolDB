@@ -120,7 +120,7 @@ class PartiesController extends AppController
             );
         } else {
             // If the election query parameter is null, limit the results to 200
-            $party['candidates_elections_electorates'] = array_slice($party['candidates_elections_electorates'], 0, 200);
+            
         }
 
         // Populate the associative array with unique elections

@@ -113,7 +113,7 @@ $checkConnection = function (string $name) {
 
                 <div class="row">
                     <div class="column" >
-                        <h1>How Don Camerons (plural) improved AuspolDB.</h1>
+                        <h1>How Don Camerons (plural) improved AuspolDB</h1>
 
 <br>
 <p>

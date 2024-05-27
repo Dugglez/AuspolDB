@@ -123,6 +123,12 @@
                             'electionId' => $electionId,
                         ];
                     }
+                    else {
+                        $tableData[$winnerId][] = [
+                            'year' => $electionYear,
+                            'electionId' => $electionId,
+                        ];
+                    }
                 }
 
 

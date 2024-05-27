@@ -100,57 +100,61 @@
             <div class="related">
 
                 <?php
-                $tableData = [];
-
-                foreach ($winners as $electionId => $winnerId) {
-                    $election = $electionslist->get($electionId);
-                    $electionDate = $election->date;
-                    $electionYear = $electionDate->format('Y');
-                    $electionLabel = h($electionYear);
-
-                    if ($winnerId !== "Multiple Members, see results") {
-                        $candidate = $candidates->get($winnerId);
-                        $candidateName = h($candidate->name);
-
-                        // Initialize or update the candidate entry in $tableData
-                        if (!isset($tableData[$candidateName])) {
-                            $tableData[$candidateName] = [];
-                        }
-
-                        // Add the election year to the candidate's entry
-                        $tableData[$candidateName][] = [
-                            'year' => $electionYear,
-                            'electionId' => $electionId,
-                        ];
-                    }
-                    else {
-                        $tableData[$winnerId][] = [
-                            'year' => $electionYear,
-                            'electionId' => $electionId,
-                        ];
-                    }
-                }
-
-
-                // Display the table
                 echo '<table>';
                 echo '<tr><th>Member</th><th>Elected</th></tr>';
-
-                foreach ($tableData as $candidateName => $elections) {
-                    // Display the row for the candidate
-                    echo '<tr>';
-                    $candidateId = $candidates->find('all')->where(['name' => $candidateName])->first()->id;
-                    echo '<td>' . $this->Html->link($candidateName, ['controller' => 'Candidates', 'action' => 'view', $candidateId]) . '</td>';
-
-                    // Build an array of links to election pages
-                    $electionLinks = [];
-                    foreach ($elections as $election) {
-                        $electionLinks[] = $this->Html->link($election['year'], ['controller' => 'Elections', 'action' => 'view', $election['electionId']]);
+                $currWinner = '';
+                
+                foreach ($winners as $year => $winner) {
+                    if ($currWinner == ''){
+                        $currWinner = $winner;
+                        echo '<tr><td>';
+                        if ($winner !== "Multiple Members, see results"){
+                            $candidateName = $candidates->find('all')->where(['id' => $winner])->first()->name;
+                            echo $this->Html->link($candidateName, ['controller' => 'Candidates', 'action' => 'view', $winner]);
+                        }
+                        else {
+                                echo $winner;
+                        }
+                        
+                        echo '</td><td>';
+                        $election = $electionslist->get($year);
+                        $electionDate = $election->date;
+                        $electionYear = $electionDate->format('Y');
+                        echo $this->Html->link($electionYear, ['controller' => 'Elections', 'action' => 'view', $election['electionId']]);
+                        continue;
                     }
+                    elseif ($currWinner == $winner){
+                        //streak
+                        $election = $electionslist->get($year);
+                        $electionDate = $election->date;
+                        $electionYear = $electionDate->format('Y');
+                        echo ' ' . $this->Html->link($electionYear, ['controller' => 'Elections', 'action' => 'view', $election['electionId']]);
+                        continue;
+                    }
+                    else {
+                        //new winner
+                        $currWinner = $winner;
 
-                    echo '<td>' . implode(' ', array_reverse($electionLinks)) . '</td>';
-                    echo '</tr>';
+                        echo ' </td></tr>';
+                        echo '<tr><td>';
+                        if ($winner !== "Multiple Members, see results"){
+                        $candidateName = $candidates->find('all')->where(['id' => $winner])->first()->name;
+                        echo $this->Html->link($candidateName, ['controller' => 'Candidates', 'action' => 'view', $winner]);
+                        }
+                        else {
+                            echo $winner;
+                        }
+                        
+                        echo '</td><td>';
+                        $election = $electionslist->get($year);
+                        $electionDate = $election->date;
+                        $electionYear = $electionDate->format('Y');
+                        echo $this->Html->link($electionYear, ['controller' => 'Elections', 'action' => 'view', $election['electionId']]);      
+                        continue;
+                    }
+                    
                 }
+                
 
                 echo '</table>';
                 ?>

@@ -135,7 +135,15 @@
                                     $electionYear = $electionDate->format('Y');
                                     $electionLabel = $electionYear . ' ' . $election->jurisdiction;
 
-                                    echo $this->Html->link(h($electionLabel), ['controller' => 'Elections', 'action' => 'view', $election->id]);
+                                    echo $this->Html->link(
+                                                h($electorate->name),
+                                                [
+                                                    'controller' => 'Electorates',
+                                                    'action' => 'view',
+                                                    $candidatesElectionsElectorates->electorate_id,
+                                                    '?' => ['contest' => $candidatesElectionsElectorates->election_id]
+                                                ]
+                                            );
                                     ?>
 
                                 </td>

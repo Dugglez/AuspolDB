@@ -135,6 +135,13 @@
                                     $electionYear = $electionDate->format('Y');
                                     $electionLabel = $electionYear . ' ' . $election->jurisdiction;
 
+                                    echo $this->Html->link(h($electionLabel), ['controller' => 'Elections', 'action' => 'view', $election->id]);
+                                    ?>
+
+                                </td>
+                                <td>
+                                    <?php
+                                    $electorate = $electorates->get($candidatesElectionsElectorates->electorate_id);
                                     echo $this->Html->link(
                                                 h($electorate->name),
                                                 [
@@ -143,14 +150,7 @@
                                                     $candidatesElectionsElectorates->electorate_id,
                                                     '?' => ['contest' => $candidatesElectionsElectorates->election_id]
                                                 ]
-                                            );
-                                    ?>
-
-                                </td>
-                                <td>
-                                    <?php
-                                    $electorate = $electorates->get($candidatesElectionsElectorates->electorate_id);
-                                    echo $this->Html->link(h($electorate->name), ['controller' => 'Electorates', 'action' => 'view', $electorate->id]);
+                                            );;
                                     ?>
                                 </td>
                                 <td><?= h($candidatesElectionsElectorates->votes) ?></td>

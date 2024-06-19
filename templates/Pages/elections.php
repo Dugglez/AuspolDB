@@ -219,6 +219,7 @@
                     <br><br>
                     <h1>New South Wales</h1>
 <p>The history of the New South Wales parliament and its election has been finely explained by others, and I would be paraphrasing them if I were to write my own version of what has already been said. You can find out about the history of the Legislative Assembly <a href="https://www.parliament.nsw.gov.au/la/roleandhistory/Pages/The-history-of-the-Legislative-Assembly.aspx">here</a> from the Parliament of New South Wales' website, and the Legislative Council <a href="https://www.abc.net.au/news/elections/nsw/2019/guide/legislative-council-history">here</a> from Antony Green.</p>
+                    <br><br>
                     <h1>Queensland</h1>
                     <p>The Queensland Parliament has been unicameral for more than 100 years. The Queensland Legislative Council, which was never an elected body, was abolished in 1922.
                     The Queensland Legislative Assembly was first contested in 1860, after Queensland was established as a state, independent from New South Wales, in 1859. Prior to that,

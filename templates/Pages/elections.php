@@ -219,8 +219,28 @@
                     <br><br>
                     <h1>New South Wales</h1>
 <p>The history of the New South Wales parliament and its election has been finely explained by others, and I would be paraphrasing them if I were to write my own version of what has already been said. You can find out about the history of the Legislative Assembly <a href="https://www.parliament.nsw.gov.au/la/roleandhistory/Pages/The-history-of-the-Legislative-Assembly.aspx">here</a> from the Parliament of New South Wales' website, and the Legislative Council <a href="https://www.abc.net.au/news/elections/nsw/2019/guide/legislative-council-history">here</a> from Antony Green.</p>
-
-
+                    <h1>Queensland</h1>
+                    <p>The Queensland Parliament has been unicameral for more than 100 years. The Queensland Legislative Council, which was never an elected body, was abolished in 1922.
+                    The Queensland Legislative Assembly was first contested in 1860, after Queensland was established as a state, independent from New South Wales, in 1859. Prior to that,
+                    Queensland sent representatives to the New South Wales Parliament. Between 1860 and 1888, the Legislative Assembly was elected using First Past the Post voting, with some electorates
+                    returning multiple members. At the 1893 election, the system had changed, with the 'contingent' form of preferential voting being used. Queensland reverted back to FPTP at the 1944 election, before
+                    switching to preferential voting at the 1963 election. The state changed from full-preferential to optional, then back to full again. In the first half of the 20th century, the Labor party
+                    was dominant in Queensland, due to rural and regional areas receiving greater representation than Brisbane in the Parliament. Demographic and political changes in these rural areas where
+                    Labor was once strong allowed the Country Party to come to power in 1957. The system was tweaked slightly to further favor the Country Party by the state's longest-serving Premier, 
+                    <?php
+                    echo $this->Html->link(
+                        'Joh Bjelke-Petersen',
+                        ['controller' => 'Candidates', 'action' => 'view', 39898]
+                    );
+                    ?>. Despite the malapportionment, Adam Carr believes that Labor would not have been able to form government in the years it spent out of office even if electorates were all the same size. On 
+                    <a href="http://psephos.adam-carr.net/countries/a/australia/states/qld/historical/1989.txt" target="_blank">the 1989 election</a>, where Labor finally returned to office after more than 30 years in opposition, he wrote that "the real reasons Labor could 
+not win elections in this period were political (the effects of the 
+1957 split and a succession of mediocre leaders) and demographic 
+(the decline of Labor's traditional base in the rural workforce and 
+the rapid growth of Brisbane suburbia and the Gold and Sunshine 
+Coasts, where Labor failed to win seats)". The Labor Party would return to dominance in Queensland after 1989, as the prosecution of corrupt elements in the Bjelke-Petersen government greatly tarnished the National brand.
+                    The Nationals would not win another election in Queensland, only briefly forming minority government in 1996 before uniting with the Liberal party to form the Liberal National Party of Queensland in 2008.
+                    </p>
 
                 </div>
 

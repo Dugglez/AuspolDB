@@ -142,16 +142,7 @@
                                 <td>
                                     <?php
                                     $electorate = $electorates->get($candidatesElectionsElectorates->electorate_id);
-                                    <?= $this->Html->link(
-                                                h($electorate->name),
-                                                [
-                                                    'controller' => 'Electorates',
-                                                    'action' => 'view',
-                                                    $candidatesElectionsElectorates->electorate_id,
-                                                    '?' => ['contest' => $candidatesElectionsElectorates->election_id]
-                                                ]
-                                            ) ?>
-                                    ?>
+                                    echo $this->Html->link(h($electorate->name), ['controller' => 'Electorates', 'action' => 'view', $electorate->id]);
                                     ?>
                                 </td>
                                 <td><?= h($candidatesElectionsElectorates->votes) ?></td>

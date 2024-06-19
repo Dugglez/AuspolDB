@@ -73,9 +73,14 @@
 
                                         // Format the electorate information
                                         $electorateInfo = $this->Html->link(
-                                            h($electorate->name),
-                                            ['controller' => 'Electorates', 'action' => 'view', $electorateId]
-                                        );
+                                                h($electorate->name),
+                                                [
+                                                    'controller' => 'Electorates',
+                                                    'action' => 'view',
+                                                    $electorateId,
+                                                    '?' => ['contest' => $lowerHouseContest->election_id]
+                                                ]
+                                            );
 
                                         echo $electorateInfo;
                                         ?>

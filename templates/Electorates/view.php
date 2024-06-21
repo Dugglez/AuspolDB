@@ -120,7 +120,7 @@
                         $election = $electionslist->get($year);
                         $electionDate = $election->date;
                         $electionYear = $electionDate->format('Y');
-                        echo $this->Html->link($electionYear, ['controller' => 'Elections', 'action' => 'view', $election['electionId']]);
+                        echo $this->Html->link($electionYear, ['controller' => 'Elections', 'action' => 'view', $election->id]);
                         continue;
                     }
                     elseif ($currWinner == $winner){
@@ -128,7 +128,7 @@
                         $election = $electionslist->get($year);
                         $electionDate = $election->date;
                         $electionYear = $electionDate->format('Y');
-                        echo ' ' . $this->Html->link($electionYear, ['controller' => 'Elections', 'action' => 'view', $election['electionId']]);
+                        echo ' ' . $this->Html->link($electionYear, ['controller' => 'Elections', 'action' => 'view', $election->id]);
                         continue;
                     }
                     else {
@@ -149,7 +149,7 @@
                         $election = $electionslist->get($year);
                         $electionDate = $election->date;
                         $electionYear = $electionDate->format('Y');
-                        echo $this->Html->link($electionYear, ['controller' => 'Elections', 'action' => 'view', $election['electionId']]);      
+                        echo $this->Html->link($electionYear, ['controller' => 'Elections', 'action' => 'view', $election->id]);      
                         continue;
                     }
                     

@@ -159,7 +159,7 @@ How, then, should the AEC determine what is safe and what is marginal? It is cle
 Independent MHR Zali Stegall holds the division of Warringah on a margin of 10.92%, in the same "safe" bracket as Macnamara, as well as Cowan in WA, which changed hands as recently as 2016. A system which defines 
 the safety of electorates should take into account the nature of the current member (as independent candidates, once they have built a personal vote, tend to survive landslide elections better than major party members),
 the trends present in the electorate and the electoral history of the area. On the other hand, perhaps this is not the business of the AEC. Perhaps this deeper analysis should be left to organisations like the ABC.
-Despite the notion of electorates being safe or fairly safe was wrong in 10 cases at the last federal election, the other 141 cases were correctly described, as marginal seats were held or lost as they should be, 
+Despite the notion of electorates being safe or fairly safe being wrong in 10 cases at the last federal election, the other 141 cases were correctly described, as marginal seats were held or lost as they should be, 
 and other safe/fairly safe seats were retained (the 2022 Federal election was also unusual for several reasons). 
 
 

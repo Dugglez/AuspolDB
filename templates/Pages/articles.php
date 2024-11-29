@@ -117,7 +117,8 @@ $checkConnection = function (string $name) {
 
 <br>
 <ul style="display: flex; list-style: none; justify-content: space-between; flex-direction: column;">
-    
+    <li><?= $this->Html->link('Misinformation and Social Media Ban Bills', ['controller' => 'Pages', 'action' => 'misinfoandsocialmedia'], ['class' => 'big-link']) ?></li>
+    <li style="border-bottom: 1px solid #000; margin-bottom: 10px; padding-bottom: 5px;"></li>
     <li><?= $this->Html->link('On Safety', ['controller' => 'Pages', 'action' => 'onsafety'], ['class' => 'big-link']) ?></li>
     <li style="border-bottom: 1px solid #000; margin-bottom: 10px; padding-bottom: 5px;"></li>
    <li><?= $this->Html->link('How Don Camerons (plural) improved AuspolDB', ['controller' => 'Pages', 'action' => 'doncameron'], ['class' => 'big-link']) ?></li>

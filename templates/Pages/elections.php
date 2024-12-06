@@ -223,7 +223,7 @@
                     <h1>Queensland</h1>
                     <p>The Queensland Parliament has been unicameral for more than 100 years. The Queensland Legislative Council, which was never an elected body, was abolished in 1922.
                     The Queensland Legislative Assembly was first contested in 1860, after Queensland was established as a state, independent from New South Wales, in 1859. Prior to that,
-                    Queensland sent representatives to the New South Wales Parliament. Between 1860 and 1888, the Legislative Assembly was elected using First Past the Post voting, with some electorates
+                    the settled areas that would become Queensland sent representatives to the New South Wales Parliament. Between 1860 and 1888, the Legislative Assembly was elected using First Past the Post voting, with some electorates
                     returning multiple members. At the 1893 election, the system had changed, with the 'contingent' form of preferential voting being used. Queensland reverted back to FPTP at the 1944 election, before
                     switching to preferential voting at the 1963 election. The state changed from full-preferential to optional, then back to full again. In the first half of the 20th century, the Labor party
                     was dominant in Queensland, due to rural and regional areas receiving greater representation than Brisbane in the Parliament. Demographic and political changes in these rural areas where

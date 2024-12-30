@@ -73,7 +73,33 @@ class ElectoratesController extends AppController
             }
         }
 
-        ksort($winners);
+        // Reorder $winners by descending election date
+        $sortedWinners = [];
+
+        // Iterate through $winners and fetch election dates
+        foreach ($winners as $electionId => $winnerId) {
+            // Fetch the election data using the election ID
+            $election = $electionslist->get($electionId);
+            
+            // Populate the $sortedWinners array with the election date as the key
+            $sortedWinners[] = [
+                'election_id' => $electionId,
+                'winner_id' => $winnerId,
+                'election_date' => $election->date
+            ];
+        }
+
+        // Sort the array by election date in descending order
+        usort($sortedWinners, function ($a, $b) {
+            return $b['election_date']->gt($a['election_date']) ? 1 : -1;
+        });
+
+
+        // Rebuild the $winners array with the sorted data
+        $winners = [];
+        foreach ($sortedWinners as $entry) {
+            $winners[$entry['election_id']] = $entry['winner_id'];
+        }
 
 
         $this->set(compact('electorate','candidates','electionslist','parties','elections_electorates','winners','contestId'));

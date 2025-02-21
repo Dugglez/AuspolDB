@@ -124,10 +124,10 @@ $checkConnection = function (string $name) {
     <br><br>
 
     I was spurred into writing this piece after the announcement that Trumpet of Patriots, a political party now playing host to billionaire Clive Palmer,
-     would be contesting seats across Australia at the next Federal election. Clive Palmer is not an efficacious political operator. While he has 
-     invested a fortune in various campaigns over the last decade, it is impossible to point at a real impact he has had on the laws and governance of Australia. 
+     would be contesting seats across Australia at the next Federal election. Clive Palmer is not a serious political operator. While he has 
+     invested a fortune in various campaigns over the last decade that have disrupted and, in a small way, influenced campaigns, it is difficult to point at a real impact he has had on the laws of Australia. 
      The impact Palmer's ventures have had lie largely in agenda-setting and the flow of his parties' preferences. While Palmer shuts up shop after an election, 
-     other right-wing minor parties continue working. Trumpet of Patriots has sown irritation in this crowd, and for good reason. Palmer running makes life more difficult for them 
+     other right-wing minor parties continue working. Trumpet of Patriots has irritated some in this crowd, and for good reason. Palmer running makes life more difficult for them 
      than it already is. The Libertarians (formerly Liberal Democrats) have been particularly outspoken about the need for unity within the minor-right parties, 
      and even proposed a coalition-style Senate system where different minor-right parties would get first place on a combined ticket in different states. 
      Such a proposal could, as the Greens did to Labor, reduce the Liberals from 3 Senate seats in most states in a half-senate election to 2. 

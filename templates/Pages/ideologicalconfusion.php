@@ -155,7 +155,8 @@ $checkConnection = function (string $name) {
      The Senate presently is in no state for a conservative government. If a Coalition government were installed at the next election, a double dissolution in 2026 
      (after the new electoral financing laws take effect) would be quite likely, as the progressive makeup of the Senate would make passage of conservative legislation near impossible. 
      If a united right-of-the-Liberals force contested that double dissolution, which could produce a more conservative Senate, they could become the legislative kingmakers of the subsequent parliament. 
-     Personalities and ideology will, however, prohibit this.
+     Personalities and ideology will, however, prohibit this. Senator Babet recently tweeted that minor-right parties should "put [their] ego aside" and come together under the Trumpet of Patriots' banner. 
+    Most minor-right parties have worked out that in order to succeed, they must come together. The trouble is that every party wants everyone else to come together under them, so that they can be in charge.
 </p>
 
 

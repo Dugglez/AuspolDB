@@ -141,12 +141,12 @@ $checkConnection = function (string $name) {
      <br><br>
      Under the GVT, minor-right parties could compete with each other with impunity, 
      as their preferences were almost always controlled by a ticket from voting above the line. Now, however, this model is unworkable. 
-     Every additional minor-right party offers another opportunity for their vote to flow back to a major party or exhaust, until eventually a major party bests them in the final count. 
+     Every additional minor-right party offers another opportunity for part of their vote to flow back to a major party or exhaust, until eventually a major party bests them in the final count. 
      Add up the minor-right (PHON, UAP, LD, AC, SFF) votes at the 2022 Senate election, and in the mainland states, their vote generally reaches or exceeds 9%, putting them in contention for the last seat in most states. 
-     As it stands, however, they will continue to hold themselves back from electoral success. Obviously, the issue is not all personality-driven. 
+     The election of Senators Babet and Hanson are proof that this is possible. As it stands, however, the minor-right will continue to hold themselves back from electoral success. Obviously, the issue is not all personality-driven. 
      The ideologies of these parties do not always marry up. The foundational disagreement of conservatism in Australia, that of Protectionism vs Free Trade, finds itself reborn, 
      with One Nation being protectionist and the Libertarians favoring free trade. Similarly, issues of free speech have been raised in the last parliament, 
-     with One Nation backing hate speech laws while much of the minor-right has opposed them. Fundamentally, the minor-right's broad individualism makes the 
+     with One Nation backing hate speech laws while much of the minor-right opposed them. Fundamentally, the minor-right's broad individualism makes the 
      collectivist act of teaming up an unnatural one. Their instinct is to compete, but without the Group Voting Ticket, this competition is in vain.
      
      <br><br>

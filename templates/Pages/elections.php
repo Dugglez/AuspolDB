@@ -242,6 +242,62 @@ the rapid growth of Brisbane suburbia and the Gold and Sunshine
 Coasts, where Labor failed to win seats)". The Labor Party would return to dominance in Queensland after 1989, as the prosecution of corrupt elements in the Bjelke-Petersen government greatly tarnished the National brand.
                     The Nationals would not win another election in Queensland, only briefly forming minority government in 1996 before uniting with the Liberal party to form the Liberal National Party of Queensland in 2008.
                     </p>
+                    <h1>Territories</h1>
+
+                    <p>
+                    Original Australian states have certain rights guaranteed to them under the Constitution, such as to minimum representation in the House of Representatives and equal 
+                        representation with other original states in the Senate. Territories have no such guarantees. Until 1966, MPs representing the Northern Territory 
+                        and the Australian Capital Territory could only vote in Parliament on matters that related to their constituents. Until 1977, territorians could not vote in referendums. 
+                        The NT and ACT are the two self-governing territories of Australia, while all other territories are governed directly by the federal government. This self-government is 
+                        at the discretion of the federal government, and can be revoked, as it did in 2015 to Norfolk Island, which had been self-governing since 1979. Discussion is ongoing 
+                        about restoring self-government to Norfolk Island. Papua New Guinea was briefly a self-governing territory from 1973 before becoming independent from Australia in 1975. 
+                        Laws passed by these self-governing territories are subject to veto by the federal Parliament.
+
+                        
+                    </p>
+
+                    <h2>Australian Capital Territory</h2>
+
+                    <p>
+The Australian Capital Territory was ceded by New South Wales to the federal government in 1911. In 1925, the Federal Capital Commission provided advice to the federal government. 
+                        It was a body of one elected commissioner and two commissioners nominated by government. In 1930, the ACT Advisory Council was created for a similar purpose, 
+                        constituted of 3 elected members and four nominated members. In 1975, the ACT House of Assembly was created, a wholly-elected - but still advisory - body, 
+                        without the power to make laws. In 1989, the ACT was granted self-government, and the first election was held for the ACT Legislative Assembly, a unicameral 
+                        body empowered to make laws for the governance of the ACT. 
+
+The first two ACT elections were conducted using a modified version of the D'Hondt system of proportional representation, where 17 members were elected from a single electorate, 
+                        covering the entire territory. Since 1995, the ACT has used a Hare-Clark system of proportional representation, as is used for Tasmanian state elections. 
+                        That year, the single constituency was split into 3 electorates. The Assembly was expanded in 2016 to 25 members representing 5 districts. The ACT, with 
+                        a large public servant population, has had a Labor government since 2001. Conservative elements in the federal parliament have sought to intervene in 
+                        self-government from time to time, over matters like voluntary assisted dying and drug law reform. Data for elections prior to self-government have 
+                        not been recorded, as explained in <?php
+                    echo $this->Html->link(
+                        'this post',
+                        ['controller' => 'Pages', 'action' => 'territoriestrouble']
+                    );
+                    ?>.
+                        
+                    </p>
+
+                    <h2>Northern Territory</h1>
+
+                    <p>
+
+                        The Northern Territory was ceded by South Australia to the federal government in 1911. In 1947, a partially-elected Legislative Council 
+                        was created, with 6 members elected and 7 members nominated by the government. Psephologist and historian Dean Jaensch recorded that 
+                        the Legislative Council had the power to "make Ordinances for the peace, order and good government of the Territory". The Legislative 
+                        Council's elected members represented single-member constituencies (except for Darwin, which returned two MLCs for the first few elections) 
+                        and were elected using full preferential voting. In 1974, the Legislative Assembly was established, a fully-elected self-governing body. 
+                        19 members were elected using full preferential voting. In 1983, the parliament expanded to 25 seats. The election of 2016 was conducted 
+                        using optional preferential voting, which was reverted shortly after. The NT's electorates are very small in population, with MPs representing 
+                        as little as 6000 people. Results for the NT Legislative Council, despite occurring prior to self-government, are recorded in AuspolDB's 
+                        dataset but not displayed in the NT's section in the elections index, as explained in <?php
+                    echo $this->Html->link(
+                        'this post',
+                        ['controller' => 'Pages', 'action' => 'territoriestrouble']
+                    );
+                    ?>.
+                    </p>
 
                 </div>
 

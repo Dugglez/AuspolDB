@@ -242,6 +242,7 @@ the rapid growth of Brisbane suburbia and the Gold and Sunshine
 Coasts, where Labor failed to win seats)". The Labor Party would return to dominance in Queensland after 1989, as the prosecution of corrupt elements in the Bjelke-Petersen government greatly tarnished the National brand.
                     The Nationals would not win another election in Queensland, only briefly forming minority government in 1996 before uniting with the Liberal party to form the Liberal National Party of Queensland in 2008.
                     </p>
+                    <br><br>
                     <h1>Territories</h1>
 
                     <p>
@@ -255,7 +256,7 @@ Coasts, where Labor failed to win seats)". The Labor Party would return to domin
 
                         
                     </p>
-
+<br><br>
                     <h2>Australian Capital Territory</h2>
 
                     <p>
@@ -264,7 +265,7 @@ The Australian Capital Territory was ceded by New South Wales to the federal gov
                         constituted of 3 elected members and four nominated members. In 1975, the ACT House of Assembly was created, a wholly-elected - but still advisory - body, 
                         without the power to make laws. In 1989, the ACT was granted self-government, and the first election was held for the ACT Legislative Assembly, a unicameral 
                         body empowered to make laws for the governance of the ACT. 
-
+<br><br>
 The first two ACT elections were conducted using a modified version of the D'Hondt system of proportional representation, where 17 members were elected from a single electorate, 
                         covering the entire territory. Since 1995, the ACT has used a Hare-Clark system of proportional representation, as is used for Tasmanian state elections. 
                         That year, the single constituency was split into 3 electorates. The Assembly was expanded in 2016 to 25 members representing 5 districts. The ACT, with 
@@ -278,7 +279,7 @@ The first two ACT elections were conducted using a modified version of the D'Hon
                     ?>.
                         
                     </p>
-
+<br><br>
                     <h2>Northern Territory</h1>
 
                     <p>

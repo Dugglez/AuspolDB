@@ -54,6 +54,7 @@
         'TAS' => 'Tasmania',
         'ACT' => 'Australian Capital Territory',
         'NT' => 'Northern Territory',
+        'NTLC' => 'Northern Territory Legislative Council',
     ];
     ?>
     <div class="column-responsive column-80">

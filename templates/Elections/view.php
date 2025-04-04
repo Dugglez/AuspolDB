@@ -625,17 +625,17 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                 case 'STV':
                     infoText = 'Single Transferable Vote (STV): ' +
                         'A voter has one vote which they may nominate preferences for.\n' +
-                        'Candidates who reach a required amount of votes (the quota) are elected.';
+                        'Candidates who reach a required number of votes (the quota) are elected.';
                     break;
                 case 'Hare-Clark':
                     infoText = 'Hare-Clark: ' +
                         'A voter has one vote which they may nominate preferences for.\n' +
-                        'Candidates who reach a required amount of votes (the quota) are elected.';
+                        'Candidates who reach a required number of votes (the quota) are elected.';
                     break;
                 case 'Modified d\'Hondt Electoral System':
                     infoText = 'Modified d\'Hondt Electoral System: ' +
                         'A voter may issue preferences above and below the line on their ballot.\n' +
-                        'Candidates who reach a quota of votes (and receive a minimum amount of\n' +
+                        'Candidates who reach a quota of votes (and receive a minimum number of\n' +
                         'first preferences) are elected.';
                     break;
                 case 'Other':
@@ -652,7 +652,7 @@ $jurisdiction = $stateMappings[$election->jurisdiction] ?? $election->jurisdicti
                     infoText = 'Full Preferential Voting (FPV): ' +
                         'A voter has one vote, and must nominate preferences for each candidate on the ballot.\n' +
                     'Voters who do not nominate preferences will have cast an informal vote.\n' +
-                        'The candidate who receives the most votes after the distribution of preferences is elected.';
+                        'The candidate who receives a majority of votes after the distribution of preferences is elected.';
                     break;
 
                 default:

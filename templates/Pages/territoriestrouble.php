@@ -138,8 +138,22 @@ Following that decision, I got to work getting the data in shape for insertion i
 they were just missing the order of election, which I inserted manually.  The first 2 ACT elections lack election orders and individual candidate primary votes, 
 with only ticket votes available. The ACT Electoral Commission informed me that they "don`t have data from the first election in '89" at all, as the election was 
 conducted by the AEC. Things were worse in the NT, where election data for early Legislative Assembly elections saw primary votes for independent candidates combined, 
-even in cases where they were successful. Worse still, in the electoral division of Tiwi in 1977, there were two endorsed Labor candidates and two endorsed Country Liberal 
-candidates, which produced two sets of combined primary votes. I had no choice but to keep these results as they were, with single candidate pages for multiple people 
+<?php
+                    echo $this->Html->link(
+                        'even in cases where they were successful',
+                        ['controller' => 'Candidates', 'action' => 'view', 44955]
+                    );
+                    ?>. Worse still, in the electoral division of Tiwi in 1977, there were <?php
+                    echo $this->Html->link(
+                        'two endorsed Labor candidates',
+                        ['controller' => 'Candidates', 'action' => 'view', 44955]
+                    );
+                    ?> and <?php
+                    echo $this->Html->link(
+                        'two endorsed Country Liberal candidates',
+                        ['controller' => 'Candidates', 'action' => 'view', 44956]
+                    );
+                    ?>, which produced two sets of combined primary votes. I had no choice but to keep these results as they were, with single candidate pages for multiple people 
 fragmenting results from other elections. The alternative, splitting candidates, was worse for the accuracy of the data. Dividing the number of votes equally across the 
 independent candidates would misrepresent the number of votes those candidates received. Giving all votes to an elected independent and setting other independents' 
 votes to 0 would be similarly inaccurate. While I had to hand-type the election results for the NT Legislative Council from a book, they were much more granular. 

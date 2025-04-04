@@ -59,7 +59,7 @@ $jurisdictions = ['Federal', 'ACT', 'VIC', 'NSW', 'NT', 'WA', 'SA', 'TAS', 'QLD'
 
 foreach ($jurisdictions as $jurisdiction) {
     // Set the class based on the jurisdiction
-    $class = in_array($jurisdiction, ['Federal', 'NSW', 'VIC', 'QLD']) ? 'btn btn-custom-green' : 'btn btn-custom-grey';
+    $class = in_array($jurisdiction, ['Federal', 'NSW', 'VIC', 'QLD', 'NT', 'ACT']) ? 'btn btn-custom-green' : 'btn btn-custom-grey';
 
     echo $this->Html->link(
         $jurisdiction,

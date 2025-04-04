@@ -120,7 +120,7 @@ $checkConnection = function (string $name) {
 My decision to expand AuspolDB to include results from the self-governing territories began with me thinking it would be a fairly simple endeavour. 
 Both were unicameral and hadn't had many elections, relative to the states or the federal parliament. I didn't expect to be confronting fundamental 
 questions like "What is a government?" or being forced to make a choice between two bad options on data integrity.
-
+<br><br>
 The first step of the process is research. I knew the ACT had been self-governing since 1989, and the NT since the 70s. I had not considered, however, 
 that I would have to decide on whether to include previous bodies prior to self-government. As noted in the relevant sections of the <?php
                     echo $this->Html->link(
@@ -133,7 +133,7 @@ partially-nominated bodies like the Victorian Legislative Council from 1851 to 1
 I chose to include the NT's Legislative Council, but left out the ACT's pre-self-government bodies. This decision was based on the fact that 
 the Legislative Council had the ability to make laws (subject to commonwealth veto), while the ACT's bodies were solely advisory until self-government. 
 I chose to separate the NT Legislative Council from the self-governing Legislative Assembly to make that distinction clear in the data.
-
+<br><br>
 Following that decision, I got to work getting the data in shape for insertion into the database. Most of the ACT elections were already in a form I could use, 
 they were just missing the order of election, which I inserted manually.  The first 2 ACT elections lack election orders and individual candidate primary votes, 
 with only ticket votes available. The ACT Electoral Commission informed me that they "don`t have data from the first election in '89" at all, as the election was 
@@ -143,13 +143,13 @@ candidates, which produced two sets of combined primary votes. I had no choice b
 fragmenting results from other elections. The alternative, splitting candidates, was worse for the accuracy of the data. Dividing the number of votes equally across the 
 independent candidates would misrepresent the number of votes those candidates received. Giving all votes to an elected independent and setting other independents' 
 votes to 0 would be similarly inaccurate. While I had to hand-type the election results for the NT Legislative Council from a book, they were much more granular. 
-
+<br><br>
 I made a decision at a fairly late stage during the ACT's data input process to change from representing the ACT Legislative Assembly as a lower house to an upper house. 
 This was because I had realised that, despite my efforts recording election order, it wouldn't be possible as the lower house system was boolean in recording whether a 
 candidate won or lost, rather than including their place in the order of election if they were successful. The distinction is ultimately arbitrary, as the ACT parliament is 
 unicameral. While the name "Legislative Assembly" generally refers to a lower house of single-member electorates, this is not a requirement. The NSW Legislative Assembly had 
 proportional representation in the 1920s, and the Victorian Legislative Council had single member electorates until the 2006 election. The Tasmanian Legislative Council still has single-member electorates. 
-
+<br><br>
 It was an interesting and instructive process.
 </p>
 
